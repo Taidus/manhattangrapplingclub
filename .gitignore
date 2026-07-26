@@ -13,3 +13,5 @@ _bmad/**/config.user.yaml
 
 # Node
 node_modules/
+.vercel
+.env*

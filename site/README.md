@@ -120,6 +120,31 @@ The site now follows the **CollegiateClub** template from the *Manhattan Grapple
 
 **Two accessibility failures in the template were fixed rather than copied.** Its closed-day greys measure **2.39:1** ("CLOSED") and **3.50:1** (the rest-day header) — both fail AA, and "CLOSED" is real information telling you not to turn up. They're raised to 4.77:1 and 4.93:1, still visibly quieter than active days.
 
+## Mobile spacing
+
+Every vertical value in the top-of-page stack and the section rhythm is clamped, so mobile
+scales down and desktop keeps the CollegiateClub proportions. Two mistakes were fixed here,
+both caused by porting desktop values verbatim:
+
+- **`.hero` and `.hero-inner` were both applying padding** — 64px + 84px, so there was
+  **148px of nothing** above the badge and the hero stood 983px tall inside an 844px
+  viewport. It could not be seen in one screen. `.hero-inner` now owns the padding alone.
+- **`--section-y` was a flat 88px**, i.e. **176px between every section on a phone**. The
+  design system's own token was `clamp(56px, 10vw, 112px)`; flattening it to the template's
+  desktop number is what charged mobile for desktop rhythm.
+
+Measured at 390px, before → after:
+
+| | Before | After |
+| --- | --- | --- |
+| Home page height | 9,250px | **8,168px** (−12%) |
+| Hero height | 983px | **635px** (fits the viewport) |
+| Dead space above the badge | 148px | **36px** |
+| Between sections | 176px | **88px** |
+
+At 1280px the section padding is still 88px and the home page is 6,316px, versus 6,324px
+before — desktop is unchanged.
+
 ## Design decisions worth knowing
 
 **The palette is sampled from the badge, not invented.** Gold `#FDB71B`, red `#E81D2E`, near-black, white — measured from the image's actual pixels.

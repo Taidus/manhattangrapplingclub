@@ -45,9 +45,10 @@ Both exit non-zero on failure, so they can gate a deploy.
 `vercel.json` configures the deploy:
 
 - **`outputDirectory: "site"`** — the pages live in `site/`, not the repo root.
-- **`cleanUrls: false`** — deliberate. Clean URLs would 308-redirect every internal
-  `.html` link, and more importantly the site is meant to keep working when opened
-  straight from the filesystem (`open site/index.html`), which extensionless URLs break.
+- **`cleanUrls: true`** — `/contact` and `/contact.html` both work. Without this,
+  extensionless URLs 404, which is what a visitor gets if they type or share `/contact`.
+  Internal links stay written as `.html` so the site still opens straight from the
+  filesystem; on Vercel those 308-redirect to the clean URL, which costs one hop.
 - **`X-Robots-Tag: noindex, nofollow`** — **this is a draft.** Without it, a deploy carrying
   visible "NEEDS CLIENT INPUT" placeholders could be indexed and compete with the club's
   live site in search. **Remove that one header line when this goes live.**

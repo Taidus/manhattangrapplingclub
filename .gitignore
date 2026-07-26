@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# The BMad skills under .claude/ are installed into the project by the BMad
+# installer — they are third-party framework files, not this project's source.
+# This project's OWN BMad configuration and team overrides live in _bmad/ and are tracked.
+.claude/
+
+# Personal BMad overrides (the team-level *.toml files ARE tracked)
+_bmad/**/*.user.toml
+_bmad/**/config.user.yaml
+
+# Node
+node_modules/

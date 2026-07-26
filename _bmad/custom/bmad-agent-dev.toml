@@ -1,0 +1,34 @@
+# Team override for bmad-agent-dev (Amelia).
+# Adds the implementation-facing skills from emilkowalski/skills to Amelia's menu.
+# Merges over .claude/skills/bmad-agent-dev/customize.toml by `code`.
+
+[agent]
+
+persistent_facts = [
+  "When implementing or reviewing UI motion, use the emilkowalski/skills set rather than improvising: `review-animations` (craft-bar review of motion code), `improve-animations` (audit + plans), `emil-design-eng` (polish philosophy), `apple-design` (spring/gesture motion), and `pick-ui-library` (curated library picks — do not hand-roll a component that has a trusted library).",
+]
+
+[[agent.menu]]
+code = "RA"
+description = "Review animation and motion code against a high craft bar (Emil Kowalski's standards)"
+skill = "review-animations"
+
+[[agent.menu]]
+code = "IA"
+description = "Audit the codebase's animations and produce prioritized, self-contained improvement plans"
+skill = "improve-animations"
+
+[[agent.menu]]
+code = "PL"
+description = "Pick the right frontend library for a task from a curated, opinionated list"
+skill = "pick-ui-library"
+
+[[agent.menu]]
+code = "DE"
+description = "Design engineering philosophy — UI polish, component design, and the invisible details"
+skill = "emil-design-eng"
+
+[[agent.menu]]
+code = "AD"
+description = "Apple's fluid, physical motion principles for gesture-driven and spring-based UI"
+skill = "apple-design"

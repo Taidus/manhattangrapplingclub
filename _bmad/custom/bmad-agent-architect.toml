@@ -1,0 +1,15 @@
+# Team override for bmad-agent-architect (Winston).
+# Library selection is an architecture decision — give Winston the curated picker.
+# Merges over .claude/skills/bmad-agent-architect/customize.toml by `code`.
+
+[agent]
+
+[[agent.menu]]
+code = "PL"
+description = "Pick the right frontend library for a task from a curated, opinionated list"
+skill = "pick-ui-library"
+
+[[agent.menu]]
+code = "AD"
+description = "Apple's interface design and fluid motion principles, as input to frontend architecture"
+skill = "apple-design"

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Manhattan Grapple Club — Brazilian Jiu-Jitsu in Manhattan, Kansas</title>
+<meta name="description" content="Brazilian Jiu-Jitsu, wrestling and self-defense in Manhattan, Kansas. Beginner-friendly classes five nights a week, a women's-only class, a free Sunday open mat, and a free two-week trial.">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="canonical" href="https://manhattangrappleclub.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Manhattan Grapple Club — Brazilian Jiu-Jitsu in Manhattan, Kansas">
+<meta property="og:description" content="Brazilian Jiu-Jitsu, wrestling and self-defense in Manhattan, Kansas. Beginner-friendly classes five nights a week, a women's-only class, a free Sunday open mat, and a free two-week trial.">
+<meta property="og:image" content="assets/img/badge.webp">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Manhattan Grapple Club — Brazilian Jiu-Jitsu in Manhattan, Kansas">
+<meta name="twitter:description" content="Brazilian Jiu-Jitsu, wrestling and self-defense in Manhattan, Kansas. Beginner-friendly classes five nights a week, a women's-only class, a free Sunday open mat, and a free two-week trial.">
+<meta name="twitter:image" content="assets/img/badge.webp">
+
+<link rel="icon" href="assets/img/badge.webp" type="image/webp">
+<link rel="apple-touch-icon" href="assets/img/badge.webp">
+
+<!-- CollegiateClub direction: Archivo Black display + Archivo body.
+     Archivo Black is a SINGLE-WEIGHT family that registers as 400 — it is never
+     requested at 700/800/900, which would trigger synthetic bolding. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="assets/css/styles.css">
+<!--
+  JSON-LD contains ONLY verified facts. priceRange comes from the club's own Glofox
+  portal ($50 Women's Only, $85 Founding Member); telephone and email were supplied
+  by the client directly.
+  Deliberately still absent: aggregateRating, openingHours.
+  Do not add them until the client confirms them. See README.md.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "Manhattan Grapple Club",
+  "description": "Brazilian Jiu-Jitsu, wrestling and self-defense classes for all skill levels in Manhattan, Kansas.",
+  "url": "https://manhattangrappleclub.com/",
+  "image": "https://manhattangrappleclub.com/assets/img/badge.webp",
+  "priceRange": "$50-$85",
+  "currenciesAccepted": "USD",
+  "telephone": "+1-620-491-8278",
+  "email": "info@manhattangrappleclub.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "511 Richards Drive, Suite A",
+    "addressLocality": "Manhattan",
+    "addressRegion": "KS",
+    "postalCode": "66502",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://www.instagram.com/manhattangrappleclub/",
+    "https://www.facebook.com/61578537733611"
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="lockup" href="index.html" aria-label="Manhattan Grapple Club, home">
+      <!-- badge is 984x1015 (ratio 0.9697) — the reserved box must match or it shifts on decode.
+           Small slots use the 192px encode (18KB); the hero uses the 384px one. -->
+      <img src="assets/img/badge-sm.webp" alt="Manhattan Grapple Club badge" width="46" height="47" class="lockup-badge">
+      <span class="lockup-text">
+        <span class="lockup-name">Manhattan<br>Grapple Club</span>
+        <span class="lockup-place">Manhattan, Kansas</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav, 1025px and up. Hidden below that, where the menu below takes over.
+         display:none removes it from the accessibility tree, so only one of the two
+         navs is ever exposed. -->
+    <nav class="site-nav" aria-label="Pages">
+      <a href="index.html#schedule">Schedule</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="first-class.html">First Class</a>
+      <a href="standards.html">Standards</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <a class="btn btn-primary btn-sm header-cta"
+       href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
+       target="_blank" rel="noopener noreferrer">
+      Free 2-week trial<span class="sr-only"> (opens in a new tab)</span>
+    </a>
+
+    <!-- Mobile menu. Built on <details>/<summary> so it opens, closes, and is
+         keyboard operable with no JavaScript at all — the browser handles the
+         expanded state natively. JS only adds Escape, outside-click, and
+         close-on-navigate. Carries more links than the desktop nav, plus the
+         trial CTA, which is otherwise absent from the header on mobile. -->
+    <details class="menu" id="menu">
+      <summary class="menu-btn" aria-label="Menu">
+        <span class="menu-bars" aria-hidden="true"></span>
+      </summary>
+      <nav class="menu-panel" aria-label="Pages">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="index.html#schedule">Class schedule</a>
+        <a href="index.html#womens">Women&rsquo;s BJJ</a>
+        <a href="index.html#pricing">Trial &amp; pricing</a>
+        <a href="index.html#coach">Who you&rsquo;ll train with</a>
+        <a href="first-class.html">Your first class</a>
+        <a href="first-class.html#faq">Questions</a>
+        <a href="standards.html">Community standards</a>
+        <a href="contact.html">Contact &amp; directions</a>
+        <a class="btn btn-primary btn-block menu-cta"
+           href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
+           target="_blank" rel="noopener noreferrer">
+          Start my free 2 weeks<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<!-- tabindex="-1" so the skip link actually moves focus in Safari, not just scroll -->
+<main id="main" tabindex="-1">
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <!-- Decorative background: the real training space. aria-hidden + empty alt because
+         the room is described in full by the Location section's photo caption; here it
+         is atmosphere, not information. Eager + high priority since it is the LCP element. -->
+    <!-- Art-directed pair: the 4:3 landscape asset only gains vertical overflow — and so
+         only responds to object-position — once its container is wider than 960px. Below
+         that a portrait crop shows the room instead of the ceiling. -->
+    <div class="hero-bg" aria-hidden="true">
+      <img class="hero-landscape"
+           src="assets/img/photos/hero-1100.webp"
+           srcset="assets/img/photos/hero-1100.webp 1100w,
+                   assets/img/photos/hero-1800.webp 1800w"
+           sizes="100vw"
+           width="1800" height="1350"
+           fetchpriority="high" decoding="async" alt="">
+      <img class="hero-portrait"
+           src="assets/img/photos/hero-portrait-900.webp"
+           width="900" height="1200"
+           fetchpriority="high" decoding="async" alt="">
+    </div>
+
+    <div class="wrap hero-inner">
+      <!-- no fetchpriority here: the hero background is the LCP element and should not
+           have to compete with the badge for priority. Still eager, just not boosted. -->
+      <img src="assets/img/badge.webp" alt="" width="160" height="165" class="hero-badge" aria-hidden="true">
+      <p class="hero-eyebrow"><span>Manhattan &middot; Kansas &middot; 66502</span></p>
+      <h1 id="hero-title">You Don&rsquo;t Have<br>to Be <span class="hl">&ldquo;Ready&rdquo;</span></h1>
+      <p class="hero-kicker">To Start</p>
+      <p class="hero-lede">
+        No experience? Not in peak shape? That&rsquo;s completely fine. Our coaches will meet you
+        where you are and help you learn at your own pace &mdash; clean, welcoming, ego-free.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-primary"
+           href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
+           target="_blank" rel="noopener noreferrer">
+          Start my free 2 weeks<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        <a class="btn btn-secondary" href="#schedule">See the schedule</a>
+      </div>
+      <!-- The location and the trial offer used to live in the eyebrow and lede. The new
+           hero copy doesn't carry either, so they move here: "Manhattan, Kansas" must stay
+           above the fold so nobody arriving from social assumes New York. -->
+      <ul class="hero-facts">
+        <li><span aria-hidden="true"></span> Free 2-week trial</li>
+        <li><span aria-hidden="true"></span> Gi &amp; No-Gi</li>
+        <li><span aria-hidden="true"></span> Open mat is free to everyone</li>
+      </ul>
+    </div>
+  </section>
+  <!-- ============ SCHEDULE ============ -->
+  <section class="section" id="schedule" aria-labelledby="schedule-title">
+    <div class="wrap">
+      <div class="secthead">
+        <span class="secthead-n" aria-hidden="true">01</span>
+        <h2 id="schedule-title">The Week</h2>
+        <p class="secthead-note">Monday through Thursday at 7:00pm, plus Sunday morning open mat. Closed Friday and Saturday.</p>
+      </div>
+
+      <!-- Week-at-a-glance strip. Below 1024px the seven-column grid can't fit, so this
+           carries the calendar shape instead: the whole week in one line.
+           aria-hidden because it restates the agenda immediately below it — a screen
+           reader should hear the week once, not twice. -->
+      <ol class="week-glance" aria-hidden="true">
+        <li data-day="1"><span class="g-day">Mon</span><span class="g-time">7p</span></li>
+        <li data-day="2"><span class="g-day">Tue</span><span class="g-time">7p</span></li>
+        <li data-day="3"><span class="g-day">Wed</span><span class="g-time">7p</span></li>
+        <li data-day="4"><span class="g-day">Thu</span><span class="g-time">7p</span></li>
+        <li data-day="5" class="g-off"><span class="g-day">Fri</span><span class="g-time">&mdash;</span></li>
+        <li data-day="6" class="g-off"><span class="g-day">Sat</span><span class="g-time">&mdash;</span></li>
+        <li data-day="0"><span class="g-day">Sun</span><span class="g-time">9:30a</span></li>
+      </ol>
+
+      <!-- A full Mon-Sun week, rest days included. Showing only the 5 class days made
+           the jump from Thursday to Sunday read as a gap rather than a closed weekend. -->
+      <ol class="week" id="week">
+        <li class="day" data-day="1">
+          <p class="day-name"><abbr title="Monday">Mon</abbr></p>
+          <div class="day-body">
+            <article class="klass">
+              <p class="klass-time">7:00<span class="mer">pm</span></p>
+              <h3 class="klass-name">Brazilian Jiu-Jitsu</h3>
+              <p class="klass-desc">Cater to all skill levels and various grappling arts backgrounds, providing an excellent foundation for effective self defense</p>
+            </article>
+          </div>
+        </li>
+
+        <li class="day" data-day="2">
+          <p class="day-name"><abbr title="Tuesday">Tue</abbr></p>
+          <div class="day-body">
+            <article class="klass">
+              <p class="klass-time">7:00<span class="mer">pm</span></p>
+              <h3 class="klass-name">Introduction to Grappling</h3>
+              <p class="tag tag-gold">Start here</p>
+              <p class="klass-desc">Suitable for all skill levels and martial arts backgrounds, emphasizing the fundamentals of self defense, Brazilian Jiu-Jitsu, and Wrestling</p>
+            </article>
+          </div>
+        </li>
+
+        <li class="day" data-day="3">
+          <p class="day-name"><abbr title="Wednesday">Wed</abbr></p>
+          <div class="day-body">
+            <article class="klass">
+              <p class="klass-time">7:00<span class="mer">pm</span></p>
+              <h3 class="klass-name">Women&rsquo;s BJJ</h3>
+              <p class="klass-desc">Women&rsquo;s only space offering Brazilian Jiu-Jitsu tailored for grappling arts and self defense</p>
+            </article>
+          </div>
+        </li>
+
+        <li class="day" data-day="4">
+          <p class="day-name"><abbr title="Thursday">Thu</abbr></p>
+          <div class="day-body">
+            <article class="klass">
+              <p class="klass-time">7:00<span class="mer">pm</span></p>
+              <h3 class="klass-name">Brazilian Jiu-Jitsu</h3>
+              <p class="klass-desc">Cater to all skill levels and various grappling arts backgrounds, providing an excellent foundation for effective self defense</p>
+            </article>
+          </div>
+        </li>
+
+        <li class="day day-rest" data-day="5">
+          <p class="day-name"><abbr title="Friday">Fri</abbr></p>
+          <div class="day-body"><p class="rest">Closed</p></div>
+        </li>
+
+        <li class="day day-rest" data-day="6">
+          <p class="day-name"><abbr title="Saturday">Sat</abbr></p>
+          <div class="day-body"><p class="rest">Closed</p></div>
+        </li>
+
+        <li class="day day-weekend" data-day="0">
+          <p class="day-name"><abbr title="Sunday">Sun</abbr></p>
+          <div class="day-body">
+            <article class="klass">
+              <p class="klass-time">9:30<span class="mer">am</span></p>
+              <h3 class="klass-name">Open Mat</h3>
+              <p class="tag tag-outline">Free</p>
+              <p class="klass-desc">No drop in fees &mdash; just open training for the entire BJJ community</p>
+            </article>
+          </div>
+        </li>
+      </ol>
+
+      <div class="placeholder" data-placeholder="class-end-times">
+        <p class="placeholder-label">Needs client input</p>
+        <p><strong>Class end times and the Gi / No-Gi rotation.</strong> The FAQ says the club rotates between Gi and No-Gi weekly, but never says which week is which. Newcomers need both to plan an evening and to know what to bring.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ============ WOMEN'S BJJ ============ -->
+  <section class="section section-feature" id="womens" aria-labelledby="womens-title">
+    <div class="wrap feature-grid">
+      <figure class="photo photo-portrait feature-photo">
+        <img src="assets/img/photos/womens-540.webp"
+             srcset="assets/img/photos/womens-540.webp 540w, assets/img/photos/womens-900.webp 900w"
+             sizes="(min-width: 900px) 460px, 100vw"
+             width="900" height="1198" loading="lazy" decoding="async"
+             alt="Members training together on the mat during a Women&rsquo;s BJJ class at Manhattan Grapple Club.">
+        <figcaption class="photo-chip">Wednesdays &middot; 7:00pm</figcaption>
+      </figure>
+
+      <div class="feature-inner">
+        <p class="eyebrow">Women&rsquo;s only</p>
+        <h2 id="womens-title">Women&rsquo;s BJJ</h2>
+        <p class="feature-lede">
+          A women&rsquo;s only space offering Brazilian Jiu-Jitsu tailored for grappling arts and self defense.
+        </p>
+
+        <ul class="feature-chips">
+          <li>No experience needed</li>
+          <li>No fitness prerequisite</li>
+          <li>Beginner-first, like every class</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+  <!-- ============ TRIAL & PRICING ============ -->
+  <section class="section" id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="secthead">
+        <span class="secthead-n" aria-hidden="true">02</span>
+        <h2 id="pricing-title">Trying It</h2>
+        <p class="secthead-note">Two weeks free, then $50 or $85 a month. The whole schedule, not a single taster class.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card card-trial">
+          <p class="card-eyebrow">Start here</p>
+          <p class="price">Free</p>
+          <p class="price-term">Two-week trial membership</p>
+          <ul class="ticks">
+            <li>Every class on the schedule</li>
+            <li>No experience required</li>
+            <li>Wear athletic clothing &mdash; nothing with metal or plastic</li>
+            <li>Turn up a few minutes early for a quick tour</li>
+          </ul>
+          <a class="btn btn-primary btn-block"
+             href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
+             target="_blank" rel="noopener noreferrer">
+            Claim my free 2 weeks<span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </article>
+
+        <article class="card">
+          <p class="card-eyebrow">After the trial</p>
+
+          <!-- Plan names, amounts and billing periods are exactly as published in the club's
+               Glofox portal. Nothing here is rounded, estimated or inferred. -->
+          <ul class="plans">
+            <li class="plan">
+              <div class="plan-head">
+                <h3 class="plan-name">Founding Member</h3>
+                <p class="plan-price">$85<span class="plan-per">/mo</span></p>
+              </div>
+              <p class="plan-note">
+                Billed every month. <strong>Exclusive to the first 20 members</strong> of Manhattan Grapple Club.
+              </p>
+            </li>
+            <li class="plan">
+              <div class="plan-head">
+                <h3 class="plan-name">Women&rsquo;s Only</h3>
+                <p class="plan-price">$50<span class="plan-per">/mo</span></p>
+              </div>
+              <p class="plan-note">Billed every month. For Women&rsquo;s only classes.</p>
+            </li>
+          </ul>
+
+          <a class="btn btn-secondary btn-block"
+             href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships"
+             target="_blank" rel="noopener noreferrer">
+            View memberships on Glofox<span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- ============ LOCATION ============ -->
+  <section class="section section-alt" id="location" aria-labelledby="location-title">
+    <div class="wrap">
+      <div class="secthead">
+        <span class="secthead-n" aria-hidden="true">03</span>
+        <h2 id="location-title">Finding Us</h2>
+      </div>
+
+      <div class="location-grid">
+        <div class="location-info">
+          <address class="address">
+            511 Richards<br>Drive, Suite A<br>
+            <span class="hl">Manhattan, KS 66502</span>
+          </address>
+
+          <div class="btn-row">
+            <a class="btn btn-primary"
+               href="https://www.google.com/maps/dir/?api=1&amp;destination=511+Richards+Drive+Suite+A+Manhattan+KS+66502"
+               target="_blank" rel="noopener noreferrer">
+              Get directions<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+
+          <!-- The club's OWN phone and email, supplied by the client. Note that
+               785 Athletics / CrossFit 785 shares this street address and has its own
+               published contact details — those are a different business and are not used. -->
+          <ul class="contact">
+            <li>
+              <p class="contact-label">Phone</p>
+              <a class="contact-value" href="tel:+16204918278">(620) 491-8278</a>
+            </li>
+            <li>
+              <p class="contact-label">Email</p>
+              <a class="contact-value contact-value-email" href="mailto:info@manhattangrappleclub.com">info@manhattangrappleclub.com</a>
+            </li>
+          </ul>
+
+          <div class="btn-row">
+            <a class="btn btn-secondary" href="contact.html">Directions &amp; contact</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ============ INSTRUCTOR ============ -->
+  <section class="section" id="coach" aria-labelledby="coach-title">
+    <div class="wrap">
+      <div class="secthead">
+        <span class="secthead-n" aria-hidden="true">04</span>
+        <h2 id="coach-title">The People</h2>
+      </div>
+
+      <div class="coach-grid">
+        <figure class="photo photo-portrait">
+          <img src="assets/img/photos/coach-540.webp"
+               srcset="assets/img/photos/coach-540.webp 540w, assets/img/photos/coach-900.webp 900w"
+               sizes="(min-width: 900px) 380px, 100vw"
+               width="900" height="1200" loading="lazy" decoding="async"
+               alt="Coach Hunter, on the right in a purple belt, on the mats with another jiu-jitsu practitioner.">
+          <figcaption>Coach Hunter &mdash; right</figcaption>
+        </figure>
+
+        <div class="coach-body">
+      <p class="coach-lede">
+        You&rsquo;ll be training with <strong>Coach Hunter</strong>.
+      </p>
+      <p class="belt">
+        <span class="belt-swatch belt-purple" aria-hidden="true"></span>
+        <span class="belt-label">Purple belt</span>
+      </p>
+      <p class="coach-note">
+        Every class is taught with beginners in mind &mdash; you won&rsquo;t be thrown in, and nobody
+        expects you to know anything on day one.
+      </p>
+
+      <div class="placeholder" data-placeholder="coach-details">
+        <p class="placeholder-label">Needs client input</p>
+        <p><strong>Who promoted Coach Hunter, his affiliation or lineage, and a short bio. Plus any other coaches who teach.</strong></p>
+        <p class="placeholder-why">
+          His name, rank and photo are confirmed and on the page. What is still missing is the
+          part that answers &ldquo;who trained him&rdquo; &mdash; the nearest BJJ gym in Manhattan
+          publishes its instructors by name, belt <em>and</em> full lineage, so that comparison is
+          still open.
+        </p>
+        <p class="placeholder-why">
+          The hero also promises &ldquo;our coaches&rdquo; in the plural. If anyone else teaches,
+          they belong here too.
+        </p>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MORE ============ -->
+  <section class="section section-alt" id="more" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="secthead">
+        <span class="secthead-n" aria-hidden="true">05</span>
+        <h2 id="more-title">More</h2>
+        <p class="secthead-note">The longer reads live on their own pages, so this one stays quick.</p>
+      </div>
+
+      <ul class="navcards">
+        <li><a href="first-class.html">
+          <span class="navcard-n" aria-hidden="true">01</span>
+          <span class="navcard-title">Your first class</span>
+          <span class="navcard-sub">What to wear, what happens when you walk in, and every question we get asked.</span>
+          <span class="navcard-arrow" aria-hidden="true">&rarr;</span>
+        </a></li>
+        <li><a href="standards.html">
+          <span class="navcard-n" aria-hidden="true">02</span>
+          <span class="navcard-title">How we train</span>
+          <span class="navcard-sub">Conduct and consent, sparring etiquette, and the safety and hygiene rules.</span>
+          <span class="navcard-arrow" aria-hidden="true">&rarr;</span>
+        </a></li>
+        <li><a href="contact.html">
+          <span class="navcard-n" aria-hidden="true">03</span>
+          <span class="navcard-title">Contact &amp; directions</span>
+          <span class="navcard-sub">Phone, email, social, the map, and which building to walk into.</span>
+          <span class="navcard-arrow" aria-hidden="true">&rarr;</span>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section final-cta" id="join" aria-labelledby="join-title">
+    <div class="wrap wrap-narrow center">
+      <h2 id="join-title">Come train Tuesday.</h2>
+      <p class="section-lede">
+        Introduction to Grappling, 7:00pm. Wear something you can move in. That is the whole list.
+      </p>
+      <a class="btn btn-primary btn-lg"
+         href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
+         target="_blank" rel="noopener noreferrer">
+        Start my free 2 weeks<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img src="assets/img/badge-sm.webp" alt="" width="56" height="58" aria-hidden="true" loading="lazy">
+      <div>
+        <p class="footer-name">Manhattan Grapple Club</p>
+        <address class="footer-addr">511 Richards Drive, Suite A<br>Manhattan, KS 66502</address>
+      </div>
+    </div>
+
+    <nav class="footer-links" aria-label="Footer">
+      <a href="index.html#schedule">Schedule</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="first-class.html">First class</a>
+      <a href="standards.html">Standards</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="footer-social">
+      <a href="tel:+16204918278">(620) 491-8278</a>
+      <a href="mailto:info@manhattangrappleclub.com">Email us</a>
+      <a href="https://www.instagram.com/manhattangrappleclub/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/61578537733611" target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+
+    <p class="footer-legal">&copy; 2026 Manhattan Grapple Club. Local redesign draft &mdash; not the live site.</p>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="stickyCta" hidden>
+  <a class="btn btn-primary btn-block"
+     href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
+     target="_blank" rel="noopener noreferrer">
+    Start my free 2 weeks<span class="sr-only"> (opens in a new tab)</span>
+  </a>
+</div>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Team override for bmad-agent-ux-designer (Sally).
+# Adds the emilkowalski/skills design-engineering set to Sally's menu.
+# Merges over .claude/skills/bmad-agent-ux-designer/customize.toml by `code`.
+
+[agent]
+
+persistent_facts = [
+  "Design and motion craft for this project is governed by the emilkowalski/skills set: `emil-design-eng` (UI polish philosophy), `apple-design` (fluid/physical motion), `animation-vocabulary` (naming effects), `find-animation-opportunities`, `improve-animations`, `review-animations`, and `pick-ui-library`. Prefer invoking the relevant skill over improvising animation values or library picks.",
+]
+
+[[agent.menu]]
+code = "DE"
+description = "Design engineering philosophy — UI polish, component design, and the invisible details (Emil Kowalski)"
+skill = "emil-design-eng"
+
+[[agent.menu]]
+code = "AD"
+description = "Apple's interface design and fluid motion principles, translated for the web"
+skill = "apple-design"
+
+[[agent.menu]]
+code = "FA"
+description = "Find where this UI would genuinely benefit from motion — and what to leave alone"
+skill = "find-animation-opportunities"
+
+[[agent.menu]]
+code = "IA"
+description = "Audit the codebase's animations and produce prioritized, self-contained improvement plans"
+skill = "improve-animations"
+
+[[agent.menu]]
+code = "AV"
+description = "Name a motion effect precisely — turn a vague description into the exact term"
+skill = "animation-vocabulary"
+
+[[agent.menu]]
+code = "PL"
+description = "Pick the right frontend library for a task from a curated, opinionated list"
+skill = "pick-ui-library"

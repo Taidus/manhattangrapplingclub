@@ -86,7 +86,9 @@
   /* Space */
   --header-h: 76px;
   --gutter: 20px;
-  --section-y: 88px;
+  /* Responsive again. A flat 88px meant 176px of padding between every section on a
+     phone — desktop rhythm charged to mobile. 88px is preserved from ~1260px up. */
+  --section-y: clamp(44px, 7vw, 88px);
   --max: 1200px;
   --max-narrow: 760px;
 
@@ -199,8 +201,8 @@ address { font-style: normal; }
 .secthead {
   display: flex; align-items: flex-end; gap: 20px;
   border-bottom: var(--rule-gold) solid var(--gold);
-  padding-bottom: 18px;
-  margin-bottom: 36px;
+  padding-bottom: clamp(12px, 2.5vw, 18px);
+  margin-bottom: clamp(22px, 4vw, 36px);
 }
 .secthead-n {
   font-family: var(--font-display); font-weight: var(--weight-display);
@@ -262,7 +264,7 @@ address { font-style: normal; }
 .btn-lg { min-height: 66px; padding: 0 44px; font-size: 18px; }
 .btn-block { display: flex; width: 100%; }
 
-.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(18px, 4vw, 28px); }
 @media (max-width: 479px) {
   .btn-row { flex-direction: column; align-items: stretch; }
   .btn-row .btn { width: 100%; }
@@ -390,7 +392,8 @@ address { font-style: normal; }
   overflow: hidden;
   border-bottom: var(--rule-gold) solid var(--gold);
 }
-@media (max-width: 768px) { .hero { min-height: 0; padding-block: 64px; } }
+/* .hero-inner supplies the padding; adding more here is what doubled it. */
+@media (max-width: 768px) { .hero { min-height: 0; } }
 
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg img {
@@ -422,17 +425,19 @@ address { font-style: normal; }
     radial-gradient(120% 78% at 50% 46%, rgba(11, 11, 12, 0.32) 0%, rgba(11, 11, 12, 0.80) 100%);
 }
 
-.hero-inner { padding-block: 84px; }
+/* One source of vertical padding, not two. This used to be a flat 84px which stacked
+   with .hero's own 64px at mobile for 148px of dead space above the badge. */
+.hero-inner { padding-block: clamp(36px, 7vw, 84px); }
 .hero-badge {
-  width: clamp(96px, 11vw, 138px);
+  width: clamp(76px, 20vw, 138px);
   height: auto;
-  margin: 0 auto 26px;
+  margin: 0 auto clamp(14px, 3vw, 26px);
 }
 
 /* Eyebrow flanked by gold rules — hero only. */
 .hero-eyebrow {
   display: flex; align-items: center; gap: 16px; justify-content: center;
-  margin-bottom: 22px;
+  margin-bottom: clamp(14px, 3vw, 22px);
 }
 .hero-eyebrow::before,
 .hero-eyebrow::after {
@@ -446,7 +451,7 @@ address { font-style: normal; }
 }
 
 .hero h1 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   text-shadow: 0 2px 24px rgba(11, 11, 12, 0.6);
 }
 .hl { color: var(--gold); }
@@ -457,14 +462,18 @@ address { font-style: normal; }
   font-size: clamp(20px, 2.6vw, 34px);
   line-height: 1; letter-spacing: 0.04em; text-transform: uppercase;
   color: var(--gold);
-  margin: 0 0 26px;
+  margin: 0 0 clamp(16px, 3.5vw, 26px);
 }
 
 .hero-lede {
   color: var(--near-white);
-  font-size: 19px;
+  /* Was a flat 19px at the body's 1.6 line-height — five tall lines on a phone, the
+     single largest block above the fold. Slightly smaller and tighter on mobile, and
+     unchanged at 19px/1.5 from ~432px up. Still well above the 16px floor. */
+  font-size: clamp(17px, 4.4vw, 19px);
+  line-height: 1.5;
   max-width: 56ch;
-  margin: 0 auto 32px;
+  margin: 0 auto clamp(22px, 4.5vw, 32px);
   text-shadow: 0 1px 12px rgba(11, 11, 12, 0.6);
 }
 .hero-lede strong { color: var(--white); }
@@ -473,7 +482,7 @@ address { font-style: normal; }
   list-style: none;
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 10px 28px;
-  margin-top: 34px;
+  margin-top: clamp(20px, 4.5vw, 34px);
   font-size: 11px; font-weight: 700;
   letter-spacing: var(--track-caps-tight); text-transform: uppercase;
   color: var(--near-white);
@@ -913,7 +922,7 @@ address { font-style: normal; }
 .step p { color: var(--muted); font-size: 15px; margin: 0; }
 
 /* ---------- Standards ---------- */
-.standards-grid { display: grid; gap: 48px; margin-top: 36px; }
+.standards-grid { display: grid; gap: clamp(30px, 5vw, 48px); margin-top: clamp(22px, 4vw, 36px); }
 .std-group { display: grid; gap: 20px; }
 .std-title {
   color: var(--gold);
@@ -1060,7 +1069,7 @@ address { font-style: normal; }
 /* ---------- Final CTA ---------- */
 .final-cta {
   border-top: var(--rule-gold) solid var(--gold);
-  padding-block: 96px;
+  padding-block: clamp(48px, 7.5vw, 96px);
   background: var(--ink);
 }
 .final-cta h2 {
@@ -1165,7 +1174,7 @@ address { font-style: normal; }
    Subpages get a compact header instead of the photo hero: same 6px gold rule,
    no 720px minimum, no LCP image to download. */
 .pagehead {
-  padding-block: clamp(44px, 8vw, 80px);
+  padding-block: clamp(34px, 6.5vw, 80px);
   border-bottom: var(--rule-gold) solid var(--gold);
   background: var(--ink);
 }

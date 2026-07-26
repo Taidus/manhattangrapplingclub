@@ -1,6 +1,9 @@
 # Manhattan Grapple Club — local redesign draft
 
-A mobile-first redesign of [manhattangrappleclub.com](https://manhattangrappleclub.com/), drafted locally. **This is not deployed and does not touch the live GoDaddy site.**
+A mobile-first redesign of [manhattangrappleclub.com](https://manhattangrappleclub.com/).
+
+**Live draft:** <https://manhattangrapplingclub.vercel.app> — served `noindex`, and it does
+not touch the club's live GoDaddy site.
 
 ## Run it
 
@@ -36,12 +39,15 @@ The single page had grown to **16,511px on a phone — roughly 20 screens.** Rea
 
 | Page | Mobile height | What's on it |
 | --- | --- | --- |
-| `index.html` | 9,361px | Hero, the week, Women's BJJ, trial & pricing, compact location, coaches, links out |
-| `first-class.html` | 3,437px | Day one, then every FAQ |
-| `standards.html` | 5,899px | Conduct, sparring do/don't, safety & hygiene |
-| `contact.html` | 3,819px | Phone, email, social, map, directions, which door |
+| `index.html` | 8,168px | Hero, the week, Women's BJJ, trial & pricing, compact location, coaches, links out |
+| `first-class.html` | 3,105px | Day one, then every FAQ |
+| `standards.html` | 5,645px | Conduct, sparring do/don't, safety & hygiene |
+| `contact.html` | 4,328px | Phone, email, social, contact form, map, directions, which door |
 
-**Home is 43% shorter**, and anything that used to be a 9,000px scroll is now one tap from the menu — the first community standard sits **545px** from the top of its own page.
+**Home is 51% shorter** than the original single page, and anything that used to be a 9,000px
+scroll is now one tap from the menu — the first community standard sits **467px** from the top
+of its own page. Heights measured at 390px wide, and they include the mobile spacing work
+below.
 
 Every page carries the same header, footer and sticky CTA, and marks itself with `aria-current="page"` in both navs.
 

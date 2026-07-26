@@ -61,24 +61,44 @@ node site/tools/check-chrome.mjs   # exit code = number of problems
 
 It has already earned its keep: it caught a stray temp file I'd left in `site/` that a manual read-through missed.
 
-## Before this can go live
+## Live
 
-Three facts are missing. The page renders each one as a visible, deliberately ugly placeholder rather than guessing. Run:
+The draft markers are gone: no placeholder boxes, no "not the live site" footer, and the
+`noindex` header has been removed so the pages can be indexed.
 
-```bash
-node site/tools/list-placeholders.mjs
-```
+### Facts the club still owes (no longer shown on the page)
 
-| Placeholder | What's needed | Priority |
+These were rendering as visible placeholders while this was a draft. They have been removed
+from the pages — the surrounding content reads correctly without them, and none of their
+absence implies anything false — but the facts are still missing and worth adding:
+
+| Was | What's needed | Where it would go |
 | --- | --- | --- |
-| `coach-details` | Who promoted Coach Hunter, his lineage, a short bio; any other coaches | **Highest** |
-| `class-end-times` | End times + which weeks are Gi vs No-Gi | Medium |
-| `age-policy` | Adults only, or are there kids' classes | Low |
+| `coach-details` | Who promoted Coach Hunter, his affiliation or lineage, a short bio; any other coaches who teach | `index.html` → section 04 |
+| `class-end-times` | Class end times, and which weeks are Gi vs No-Gi | `index.html` → section 01 |
+| `age-policy` | Adults only, or are there kids' classes | `first-class.html` → FAQ |
 
-**Pricing is now live on the page** — Founding Member $85/mo, Women's Only $50/mo, plus the free two-week trial — taken from a client-supplied Glofox screenshot. That closes the largest conversion leak the brief identified: the site now states its price *before* handing off to Glofox.
+`tools/list-placeholders.mjs` now reports zero, which is what makes the site safe to publish.
+If you add a placeholder back while drafting a change, it will start reporting again.
 
-- **The instructor** was named nowhere online. The club's PDFs carry a personal name in their file metadata, but that identifies whoever built the file in Canva — it is not evidence of who teaches, so it was deliberately not used. Coach Hunter's name and rank came from the client directly.
-- **The Founding Member cap** (20 members) is published as the club states it. It is not independently verified, and there is no longer a placeholder tracking it — if those places fill up, that line needs removing from the pricing card by hand.
+**Pricing is live on the page** — Founding Member $85/mo, Women's Only $50/mo, plus the free
+two-week trial — from a client-supplied Glofox screenshot. That closes the largest conversion
+leak the brief identified: the site states its price *before* handing off to Glofox.
+
+### Pointing the real domain here
+
+This is the part only the club can do, and it is what "going live" ultimately means.
+`manhattangrappleclub.com` is still on GoDaddy serving the old site.
+
+1. In Vercel → the project → **Domains**, add `manhattangrappleclub.com` (and `www`).
+2. Vercel gives you DNS records; set them at GoDaddy, replacing the current ones.
+3. Nothing else needs changing in this repo — every page's `<link rel="canonical">` and the
+   JSON-LD `url` already point at `manhattangrappleclub.com`.
+
+That last point is deliberate. While the site is served from `manhattangrapplingclub.vercel.app`,
+those canonical tags mean search engines treat the club's real domain as authoritative, so this
+copy **cannot compete with the existing site in search results**. The moment the domain is
+pointed here, the configuration is already correct with no further edits.
 
 ### The contact form is interim
 

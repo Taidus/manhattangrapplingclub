@@ -40,6 +40,21 @@ node site/tools/check-chrome.mjs        # header/footer parity + link integrity 
 
 Both exit non-zero on failure, so they can gate a deploy.
 
+## Deploying
+
+`vercel.json` configures the deploy:
+
+- **`outputDirectory: "site"`** — the pages live in `site/`, not the repo root.
+- **`cleanUrls: false`** — deliberate. Clean URLs would 308-redirect every internal
+  `.html` link, and more importantly the site is meant to keep working when opened
+  straight from the filesystem (`open site/index.html`), which extensionless URLs break.
+- **`X-Robots-Tag: noindex, nofollow`** — **this is a draft.** Without it, a deploy carrying
+  visible "NEEDS CLIENT INPUT" placeholders could be indexed and compete with the club's
+  live site in search. **Remove that one header line when this goes live.**
+
+Every page also carries `<link rel="canonical">` pointing at `manhattangrappleclub.com`, so
+even if a draft URL is discovered, search engines are told where the real site is.
+
 ## Status
 
 Three facts are still outstanding and render on the page as deliberately obvious placeholders

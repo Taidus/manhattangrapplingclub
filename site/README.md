@@ -285,6 +285,18 @@ JavaScript off the gallery still works: the click just opens the photo. That is 
 not assumed — the test suite loads the page with page scripting disabled and confirms the
 href resolves to a real `image/webp` response.
 
+**The lightbox is site-wide, not gallery-only.** Every content photo opens it: the Women's
+BJJ figure and both coach cards on the home page, both coach cards on `/about`, the
+exterior photo on `/contact`, and all 14 gallery images. Decorative images do not — the
+hero background and the badges are `aria-hidden` and are not content.
+
+This was a bug first. The lightbox originally required `#gallery` to exist, and the home
+page photos were plain `<img>` in a `<figure>`, so they were inert while looking perfectly
+finished — nothing rendered wrong, and only clicking revealed it. Two checks now cover it
+from both sides: `check-chrome.mjs` fails if a page carries `.gal-item` links without the
+`<dialog>` (or vice versa), and `check-photos-clickable.mjs` clicks every photo on every
+page at two widths and asserts the right image, caption and counter come up.
+
 **Two bugs worth recording, both found by measuring rather than looking:**
 
 - The arrows were children of `.lb-stage` and absolutely positioned, returning to

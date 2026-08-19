@@ -91,7 +91,30 @@ for (const p of pages) {
 }
 if (problems === before) ok(`${navCount} navigational links resolve, ${assetCount} asset refs exist`);
 
-// ------------------------------------------------------- 3. every page is reachable
+// --------------------------------------------------------------- 3. lightbox wiring
+// A .gal-item is a link that main.js upgrades into a lightbox. If a page carries one
+// without the <dialog>, the upgrade silently does nothing and the photo just navigates
+// away — which is exactly how the home-page photos shipped inert the first time.
+console.log(`\n${BOLD}Lightbox${RESET}`);
+const dialogs = {};
+for (const p of pages) {
+  const hasItems = src[p].includes('class="gal-item"');
+  const dialog = slice(src[p], '<dialog class="lightbox"', '</dialog>');
+  if (hasItems && !dialog) fail(`${p} has .gal-item links but no <dialog class="lightbox"> — they will navigate instead of opening`);
+  if (dialog && !hasItems) fail(`${p} has the lightbox dialog but no .gal-item links to open it`);
+  if (dialog) dialogs[p] = dialog;
+}
+const dialogPages = Object.keys(dialogs);
+if (dialogPages.length > 1) {
+  const ref = dialogs[dialogPages[0]];
+  const drifted = dialogPages.filter((p) => dialogs[p] !== ref);
+  if (drifted.length) fail(`lightbox dialog differs in: ${drifted.join(', ')} (reference: ${dialogPages[0]})`);
+  else ok(`dialog identical across ${dialogPages.length} pages, and present wherever .gal-item is`);
+} else if (dialogPages.length === 1) {
+  ok(`dialog present on ${dialogPages[0]}`);
+}
+
+// ------------------------------------------------------- 4. every page is reachable
 console.log(`\n${BOLD}Reachability${RESET}`);
 for (const p of pages) {
   const linkedFrom = pages.filter((q) => q !== p && src[q].includes(`href="${p}`));

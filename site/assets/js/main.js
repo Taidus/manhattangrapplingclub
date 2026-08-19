@@ -240,10 +240,12 @@
      ---------------------------------------------------------------------- */
   function lightbox() {
     var box = document.getElementById('lightbox');
-    var grid = document.getElementById('gallery');
-    if (!box || !grid || typeof box.showModal !== 'function') return;
+    if (!box || typeof box.showModal !== 'function') return;
 
-    var links = Array.prototype.slice.call(grid.querySelectorAll('.gal-item'));
+    // Every .gal-item on the page, wherever it sits — the gallery grid, the Women's BJJ
+    // figure, a coach card, the exterior photo on the contact page. This deliberately
+    // does NOT scope to #gallery: doing so was why the home page photos did nothing.
+    var links = Array.prototype.slice.call(document.querySelectorAll('.gal-item'));
     if (!links.length) return;
 
     var img = document.getElementById('lbImg');

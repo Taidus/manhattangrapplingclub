@@ -949,6 +949,10 @@ address { font-style: normal; }
   border: 0;
   font-family: var(--font-display); font-weight: var(--weight-display);
   font-size: 12px; letter-spacing: 0.08em;
+  /* The chip sits ON TOP of the photo. Where the photo is a lightbox link, a click
+     landing on the chip would otherwise hit the caption and do nothing — so the whole
+     image stays clickable, corner included. The chip is not interactive itself. */
+  pointer-events: none;
 }
 
 /* ---------- Prose ----------

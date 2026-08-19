@@ -230,11 +230,16 @@
       <div class="coach-grid">
         <article class="coach">
           <figure class="photo photo-portrait">
-            <img src="assets/img/photos/hunter-540.webp"
-                 srcset="assets/img/photos/hunter-540.webp 540w, assets/img/photos/hunter-900.webp 900w"
-                 sizes="(min-width: 1025px) 340px, 100vw"
-                 width="900" height="1200" loading="lazy" decoding="async"
-                 alt="Coach Hunter, second from left, with Chris Wojcik, Keith Krikorian and Declan Moody in front of the Serafin Jiu-Jitsu mural.">
+            <a class="gal-item" href="assets/img/photos/hunter-1200.webp"
+               data-srcset="assets/img/photos/hunter-900.webp 900w, assets/img/photos/hunter-1200.webp 1200w"
+               data-caption="Coach Hunter, second from left &mdash; with Chris Wojcik, Keith Krikorian &amp; Declan Moody at Serafin Jiu-Jitsu">
+              <img src="assets/img/photos/hunter-540.webp"
+                   srcset="assets/img/photos/hunter-540.webp 540w, assets/img/photos/hunter-900.webp 900w"
+                   sizes="(min-width: 1025px) 340px, 100vw"
+                   width="900" height="1200" loading="lazy" decoding="async"
+                   alt="Coach Hunter, second from left, with Chris Wojcik, Keith Krikorian and Declan Moody in front of the Serafin Jiu-Jitsu mural.">
+              <span class="sr-only"> &mdash; view larger</span>
+            </a>
             <figcaption>Coach Hunter, second from left &mdash; with Chris Wojcik, Keith Krikorian &amp; Declan Moody at Serafin Jiu-Jitsu</figcaption>
           </figure>
 
@@ -262,11 +267,16 @@
 
         <article class="coach">
           <figure class="photo photo-portrait">
-            <img src="assets/img/photos/annie-540.webp"
-                 srcset="assets/img/photos/annie-540.webp 540w, assets/img/photos/annie-900.webp 900w"
-                 sizes="(min-width: 1025px) 340px, 100vw"
-                 width="900" height="1200" loading="lazy" decoding="async"
-                 alt="Coach Annie, arms folded and smiling, in front of the CrossFit 785 wall at the gym.">
+            <a class="gal-item" href="assets/img/photos/annie-1200.webp"
+               data-srcset="assets/img/photos/annie-900.webp 900w, assets/img/photos/annie-1200.webp 1200w"
+               data-caption="Coach Annie">
+              <img src="assets/img/photos/annie-540.webp"
+                   srcset="assets/img/photos/annie-540.webp 540w, assets/img/photos/annie-900.webp 900w"
+                   sizes="(min-width: 1025px) 340px, 100vw"
+                   width="900" height="1200" loading="lazy" decoding="async"
+                   alt="Coach Annie, arms folded and smiling, in front of the CrossFit 785 wall at the gym.">
+              <span class="sr-only"> &mdash; view larger</span>
+            </a>
             <figcaption>Coach Annie</figcaption>
           </figure>
 
@@ -330,6 +340,32 @@
   </section>
 
 </main>
+
+<!-- Lightbox. Empty until opened: main.js fills in the image, caption and counter.
+     <dialog> gives the modal semantics natively — focus trap, inert background,
+     Escape to close, and focus returned to the thumbnail on close. -->
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <div class="lb-stage">
+    <button class="lb-btn lb-close" type="button" aria-label="Close photo viewer">&times;</button>
+
+    <figure class="lb-figure">
+      <!-- Every gallery encode is 1600x1200, so the ratio is known before the src is
+           set. Declaring it stops the figure reflowing as each photo decodes. -->
+      <img id="lbImg" alt="" width="1600" height="1200" decoding="async">
+    </figure>
+
+    <!-- The arrows live in the bar. Above 641px CSS lifts them out and centres them
+         over the image; below it they stay here, in flow, where they cannot cover
+         the photo. They are NOT children of .lb-stage — that grid has two rows, and
+         extra in-flow children there stretch into full-width blocks. -->
+    <div class="lb-bar">
+      <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">&larr;</button>
+      <p class="lb-count" id="lbCount" aria-live="polite"></p>
+      <figcaption class="lb-caption" id="lbCap"></figcaption>
+      <button class="lb-btn lb-next" type="button" aria-label="Next photo">&rarr;</button>
+    </div>
+  </div>
+</dialog>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">

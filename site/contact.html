@@ -242,11 +242,16 @@
 
         <div class="location-media">
         <figure class="photo photo-wide">
-          <img src="assets/img/photos/exterior-720.webp"
-               srcset="assets/img/photos/exterior-720.webp 720w, assets/img/photos/exterior-1200.webp 1200w"
-               sizes="(min-width: 1025px) 560px, 100vw"
-               width="1200" height="900" loading="lazy" decoding="async"
-               alt="The gym from the road: two signs reading CrossFit 785 and 785 Athletics, in front of a yellow metal building with a gravel parking lot.">
+          <a class="gal-item" href="assets/img/photos/exterior-1200.webp"
+             data-srcset="assets/img/photos/exterior-720.webp 720w, assets/img/photos/exterior-1200.webp 1200w"
+             data-caption="The building &mdash; look for the 785 signs">
+            <img src="assets/img/photos/exterior-720.webp"
+                 srcset="assets/img/photos/exterior-720.webp 720w, assets/img/photos/exterior-1200.webp 1200w"
+                 sizes="(min-width: 1025px) 560px, 100vw"
+                 width="1200" height="900" loading="lazy" decoding="async"
+                 alt="The gym from the road: two signs reading CrossFit 785 and 785 Athletics, in front of a yellow metal building with a gravel parking lot.">
+            <span class="sr-only"> &mdash; view larger</span>
+          </a>
           <figcaption>This is the building &mdash; look for the 785 signs</figcaption>
         </figure>
 
@@ -276,6 +281,32 @@
   </section>
 
 </main>
+
+<!-- Lightbox. Empty until opened: main.js fills in the image, caption and counter.
+     <dialog> gives the modal semantics natively — focus trap, inert background,
+     Escape to close, and focus returned to the thumbnail on close. -->
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <div class="lb-stage">
+    <button class="lb-btn lb-close" type="button" aria-label="Close photo viewer">&times;</button>
+
+    <figure class="lb-figure">
+      <!-- Every gallery encode is 1600x1200, so the ratio is known before the src is
+           set. Declaring it stops the figure reflowing as each photo decodes. -->
+      <img id="lbImg" alt="" width="1600" height="1200" decoding="async">
+    </figure>
+
+    <!-- The arrows live in the bar. Above 641px CSS lifts them out and centres them
+         over the image; below it they stay here, in flow, where they cannot cover
+         the photo. They are NOT children of .lb-stage — that grid has two rows, and
+         extra in-flow children there stretch into full-width blocks. -->
+    <div class="lb-bar">
+      <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">&larr;</button>
+      <p class="lb-count" id="lbCount" aria-live="polite"></p>
+      <figcaption class="lb-caption" id="lbCap"></figcaption>
+      <button class="lb-btn lb-next" type="button" aria-label="Next photo">&rarr;</button>
+    </div>
+  </div>
+</dialog>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">

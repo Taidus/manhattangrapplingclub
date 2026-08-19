@@ -188,6 +188,9 @@ address { font-style: normal; }
 }
 .wrap-narrow { max-width: var(--max-narrow); }
 .center { text-align: center; }
+/* For short compound terms that must not be split across lines by the automatic
+   hyphen break — "No-Gi" reads as "NO-" / "GI" in a narrow display-type heading. */
+.nowrap { white-space: nowrap; }
 
 .section { padding-block: var(--section-y); }
 .section-alt {
@@ -294,6 +297,9 @@ address { font-style: normal; }
   font-family: var(--font-display); font-weight: var(--weight-display);
   font-size: 17px; letter-spacing: 0.01em; text-transform: uppercase;
   line-height: 1.1;
+  /* The two lines are set by an explicit <br>. nowrap stops a squeezed header adding a
+     third by breaking "Grapple Club" — which is what happened at exactly 1025px. */
+  white-space: nowrap;
 }
 .lockup-place {
   display: block;
@@ -302,7 +308,11 @@ address { font-style: normal; }
   color: var(--gold); margin-top: 3px;
 }
 
-.site-nav { display: none; gap: 28px; }
+/* Clamped, not a flat 28px: the nav carries six items now that About is in it, and at
+   exactly 1025px — where the desktop nav first appears — a flat 28px put the lockup, the
+   six links and the trial CTA over the available width. This narrows the gap only where
+   the space is actually tight and restores 28px on wide screens. */
+.site-nav { display: none; gap: clamp(16px, 1.9vw, 28px); }
 .site-nav a {
   display: inline-flex; align-items: center;
   min-height: 44px;
@@ -376,10 +386,24 @@ address { font-style: normal; }
   border-bottom: 0;
 }
 
+/* The trial button appears at 1025px — the desktop conversion path must never be
+   absent, and the sticky mobile CTA is switched off from this width up. */
 @media (min-width: 1025px) {
+  .header-cta { display: inline-flex; }
+  /* .menu carries margin-left:auto so it hugs the right on mobile. With the trial button
+     now beside it and the nav still hidden (1025–1100), that second auto margin stranded
+     the button in the middle of the header. The lockup's own margin-right:auto is enough
+     to push this pair to the right edge. */
+  .menu { margin-left: 0; }
+}
+/* The nav waits until 1100px. Measured: with six items the header row needs about
+   1060px of content width, and below ~1100px the lockup is squeezed into a THIRD line
+   ("Grapple" / "Club"). Between 1025 and 1100 the hamburger takes over — it carries
+   every link the desktop nav does, plus more, plus its own trial CTA — so nothing is
+   lost, and the header stops looking broken at the one width where it used to. */
+@media (min-width: 1100px) {
   .menu { display: none; }
   .site-nav { display: flex; }
-  .header-cta { display: inline-flex; }
 }
 
 /* ---------- Hero — full-bleed, centred ---------- */
@@ -698,6 +722,38 @@ address { font-style: normal; }
   margin: 0 0 26px;
 }
 
+/* Rule-separated BULLET list. Same rhythm as `.ticks` below, but the marker is the gold
+   bar the hygiene lists use rather than a counter — `.ticks` numbers its items with
+   `counter(tick, decimal-leading-zero)`, and these items are things to know rather than
+   steps to perform in order. */
+.bullets {
+  list-style: none;
+  display: grid; gap: 0;
+  margin: 0;
+  max-width: 68ch;
+  border-top: 1px solid var(--hairline-2);
+}
+.bullets li {
+  position: relative;
+  padding: 15px 0 15px 28px;
+  border-bottom: 1px solid var(--hairline-2);
+  font-size: 15px; line-height: 1.55; color: var(--muted-2);
+}
+.bullets li::before {
+  content: ""; position: absolute; left: 0; top: 0.85em;
+  width: 14px; height: 2px; background: var(--gold);
+}
+.bullets-lg li { font-size: clamp(16px, 4vw, 18px); }
+.bullets strong { color: var(--white); font-weight: 700; }
+
+/* Trailing note under a section's main content — the internal-link sentence. */
+.section-note {
+  max-width: 68ch;
+  margin: clamp(22px, 4vw, 32px) 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
 /* Numbered rule-separated list — the collegiate answer to a tick list. */
 .ticks {
   list-style: none; counter-reset: tick;
@@ -886,10 +942,29 @@ address { font-style: normal; }
   font-size: 12px; letter-spacing: 0.08em;
 }
 
-/* ---------- Coach ---------- */
-.coach-grid { display: grid; gap: 32px; }
+/* ---------- Prose ----------
+   Running body copy — the About section and the About page. Measure is capped at 68ch
+   because the page is otherwise all panels and lists, and a full 1200px line of 17px
+   body text is unreadable. */
+.prose { display: grid; gap: 18px; max-width: 68ch; }
+.prose p { margin: 0; color: var(--muted); line-height: var(--lh-body); }
+.prose strong { color: var(--white); font-weight: 700; }
+/* After `.prose p` so it wins on cascade order rather than needing !important. */
+.prose .prose-lede { color: var(--near-white); font-size: var(--size-lede); }
+
+/* ---------- Coach ----------
+   One `.coach` card per instructor. auto-fit means a second card drops in beside the
+   first with no markup or CSS change — which is the point: the club has a second coach
+   whose biography has not been supplied yet. */
+.coach-grid { display: grid; gap: clamp(32px, 5vw, 56px); }
 @media (min-width: 1025px) {
-  .coach-grid { grid-template-columns: 380px 1fr; gap: 56px; align-items: start; }
+  .coach-grid { grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); align-items: start; }
+}
+.coach { display: grid; gap: 32px; align-content: start; }
+/* Side-by-side only while it is the ONLY card. With two cards each column is ~570px, and
+   a 320px photo would leave the biography about 210px wide. Two cards stack instead. */
+@media (min-width: 1025px) {
+  .coach:only-child { grid-template-columns: 340px 1fr; gap: 56px; align-items: start; }
 }
 .coach-body { display: grid; gap: 18px; align-content: start; }
 .coach-lede {
@@ -1246,6 +1321,10 @@ address { font-style: normal; }
   border: var(--rule-edge) solid var(--hairline-2);
 }
 @media (min-width: 900px) { .navcards { grid-template-columns: repeat(3, 1fr); } }
+/* Four-card variant (the About page). Must follow the rule above so it wins at 900px,
+   where `repeat(3, 1fr)` would leave a single orphaned card on its own row. */
+@media (min-width: 900px)  { .navcards-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .navcards-4 { grid-template-columns: repeat(4, 1fr); } }
 .navcards li { background: var(--ink); display: flex; }
 .navcards a {
   display: grid; gap: 10px; align-content: start;

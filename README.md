@@ -1,8 +1,8 @@
 # Manhattan Grapple Club — website redesign
 
-A redesign of [manhattangrappleclub.com](https://manhattangrappleclub.com/) for **Manhattan Grapple Club**, a Brazilian Jiu-Jitsu gym in Manhattan, **Kansas**.
+A redesign of [manhattangrappleclub.com](https://www.manhattangrappleclub.com/) for **Manhattan Grapple Club**, a Brazilian Jiu-Jitsu gym in Manhattan, **Kansas**.
 
-> **This is a draft.** It is not deployed and does not touch the club's live site.
+**Live at <https://www.manhattangrappleclub.com/>.** Five static pages, no build step.
 
 ## Run it
 
@@ -17,12 +17,15 @@ cd site && python3 -m http.server 8080
 ## What's here
 
 ```
-site/                 the site — four static pages, no build step
-├── index.html          home: hero, the week, Women's BJJ, trial & pricing, location, coaches
-├── first-class.html    "new here?" — day one, then every FAQ
+site/                 the site — five static pages, no build step
+├── index.html          home: hero, about, the week, Women's BJJ, trial & pricing, location, coaches
+├── about.html          the club, how we coach, who you'll train with
+├── first-class.html    "new here?" — start here, then every FAQ
 ├── standards.html      conduct, sparring etiquette, safety & hygiene
 ├── contact.html        phone, email, social, contact form, map, directions
-└── tools/              launch-blocker manifest + chrome/link integrity checks
+├── robots.txt          allows crawling, points at the sitemap
+├── sitemap.xml         the five canonical URLs, nothing that redirects
+└── tools/              launch-blocker manifest + chrome, link and SEO integrity checks
 
 _bmad-output/         planning artifacts (brief → PRD → DESIGN.md + EXPERIENCE.md)
 images/               original client assets
@@ -36,9 +39,13 @@ direction, and the decisions worth knowing.
 ```bash
 node site/tools/list-placeholders.mjs   # facts the club must still supply; exit code = count
 node site/tools/check-chrome.mjs        # header/footer parity + link integrity across pages
+node site/tools/check-seo.mjs           # canonicals, unique metadata, JSON-LD, sitemap, robots
 ```
 
-Both exit non-zero on failure, so they can gate a deploy.
+All three exit non-zero on failure, so they can gate a deploy. `check-seo.mjs` is the one
+that catches the invisible drift — a canonical left pointing at a redirecting URL, a
+duplicated `<title>`, a relative `og:image`, a stray `</div>`, or a sitemap that has fallen
+out of step with the pages' own canonical tags.
 
 ## Deploying
 
@@ -49,18 +56,29 @@ Both exit non-zero on failure, so they can gate a deploy.
   extensionless URLs 404, which is what a visitor gets if they type or share `/contact`.
   Internal links stay written as `.html` so the site still opens straight from the
   filesystem; on Vercel those 308-redirect to the clean URL, which costs one hop.
-- **`X-Robots-Tag: noindex, nofollow`** — **this is a draft.** Without it, a deploy carrying
-  visible "NEEDS CLIENT INPUT" placeholders could be indexed and compete with the club's
-  live site in search. **Remove that one header line when this goes live.**
 
-Every page also carries `<link rel="canonical">` pointing at `manhattangrappleclub.com`, so
-even if a draft URL is discovered, search engines are told where the real site is.
+### The canonical URL
+
+There is exactly one address for every page: **`https://` + `www.` + no `.html`**.
+
+| Variant | Behaviour (verified live) |
+| --- | --- |
+| `http://manhattangrappleclub.com/…` | 308 → `https://` |
+| `https://manhattangrappleclub.com/…` | 308 → `https://www.` |
+| `/contact.html` | 308 → `/contact` |
+| `/index.html` | 308 → `/` |
+
+Every page's `<link rel="canonical">`, `og:url`, JSON-LD `url`, and every entry in
+`sitemap.xml` is the final form — never a variant that redirects. `check-seo.mjs` asserts
+this, because a canonical tag naming a URL that 308s is the specific mistake this site had
+before, and it is invisible in a browser.
 
 ## Status
 
-Three facts are still outstanding and render on the page as deliberately obvious placeholders
-rather than being guessed at — see `site/README.md`. Everything else on the site traces to
-something the club published or told us directly.
+The site is live and indexable. Two facts are still missing and are deliberately **not**
+published rather than guessed at — Coach Annie's biography, and class end times. See
+[`LOCAL-SEO-HANDOFF.md`](LOCAL-SEO-HANDOFF.md), which also carries the off-site local-SEO
+work (Google Business Profile, reviews, citations, Search Console) that only the club can do.
 
 ## A note on the planning artifacts
 

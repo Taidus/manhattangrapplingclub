@@ -1,9 +1,8 @@
-# Manhattan Grapple Club — local redesign draft
+# Manhattan Grapple Club — the site
 
-A mobile-first redesign of [manhattangrappleclub.com](https://manhattangrappleclub.com/).
+A mobile-first redesign of [manhattangrappleclub.com](https://www.manhattangrappleclub.com/).
 
-**Live draft:** <https://manhattangrapplingclub.vercel.app> — served `noindex`, and it does
-not touch the club's live GoDaddy site.
+**Live:** <https://www.manhattangrappleclub.com/>
 
 ## Run it
 
@@ -23,33 +22,41 @@ cd site && python3 -m http.server 8080
 ```
 site/
 ├── index.html                  home — the arrival moment
-├── first-class.html            "new here?" — day one + FAQ
+├── about.html                  the club, how we coach, who you'll train with
+├── first-class.html            "new here?" — start here + FAQ
 ├── standards.html              conduct, sparring etiquette, safety & hygiene
 ├── contact.html                phone, email, social, map, directions
+├── robots.txt                  allows crawling, points at the sitemap
+├── sitemap.xml                 the five canonical URLs
 ├── assets/css/styles.css       design system + layout (shared)
 ├── assets/js/main.js           progressive enhancement only (shared)
 ├── assets/img/                 badge + photos
 ├── tools/list-placeholders.mjs launch-blocker manifest (walks all pages)
-└── tools/check-chrome.mjs      chrome parity + link integrity
+├── tools/check-chrome.mjs      chrome parity + link integrity
+└── tools/check-seo.mjs         canonicals, metadata, JSON-LD, sitemap, robots
 ```
 
-## Four pages, not one
+## Five pages, not one
 
 The single page had grown to **16,511px on a phone — roughly 20 screens.** Reaching the community standards meant scrolling past 9,363px of everything else. So the long tail moved onto its own pages:
 
 | Page | Mobile height | What's on it |
 | --- | --- | --- |
-| `index.html` | 8,168px | Hero, the week, Women's BJJ, trial & pricing, compact location, coaches, links out |
-| `first-class.html` | 3,105px | Day one, then every FAQ |
+| `index.html` | 8,690px | Hero, about, the week, Women's BJJ, trial & pricing, compact location, coaches, links out |
+| `about.html` | 5,396px | The club's story, how we coach, coach biographies, where to go next |
+| `first-class.html` | 2,685px | Start here, then every FAQ |
 | `standards.html` | 5,645px | Conduct, sparring do/don't, safety & hygiene |
 | `contact.html` | 4,328px | Phone, email, social, contact form, map, directions, which door |
 
-**Home is 51% shorter** than the original single page, and anything that used to be a 9,000px
+**Home is 47% shorter** than the original single page, and anything that used to be a 9,000px
 scroll is now one tap from the menu — the first community standard sits **467px** from the top
 of its own page. Heights measured at 390px wide, and they include the mobile spacing work
 below.
 
 Every page carries the same header, footer and sticky CTA, and marks itself with `aria-current="page"` in both navs.
+
+`about.html` is generated from `index.html`'s chrome rather than hand-copied, which is why
+its header and footer are byte-identical to the other four.
 
 ### Why there's a checker instead of a build step
 
@@ -57,9 +64,16 @@ With no build step the chrome is physically duplicated in four files, which is t
 
 ```bash
 node site/tools/check-chrome.mjs   # exit code = number of problems
+node site/tools/check-seo.mjs      # the invisible half: canonicals, metadata, JSON-LD, sitemap
 ```
 
 It has already earned its keep: it caught a stray temp file I'd left in `site/` that a manual read-through missed.
+
+`check-seo.mjs` covers what a browser will never show you — a canonical pointing at a URL
+that 308s, a duplicated `<title>`, a relative `og:image` (crawlers ignore those, which is
+why these pages used to preview with no image at all), a sitemap that has drifted from the
+pages' own canonicals, and unbalanced `<div>` tags. It found a stray `</div>` in
+`index.html`'s location section, left behind when the map embed moved to `contact.html`.
 
 ## Live
 
@@ -74,8 +88,8 @@ absence implies anything false — but the facts are still missing and worth add
 
 | Was | What's needed | Where it would go |
 | --- | --- | --- |
-| `coach-details` | Who promoted Coach Hunter, his affiliation or lineage, a short bio; any other coaches who teach | `index.html` → section 04 |
-| `class-end-times` | Class end times, and which weeks are Gi vs No-Gi | `index.html` → section 01 |
+| `coach-details` | **Partly resolved.** Coach Hunter's biography, belt and lineage were supplied and are published. **Coach Annie's biography has not been** — the markup carries a `TODO — COACH ANNIE` comment, and the coach grid is `repeat(auto-fit, …)` so her card drops in beside Hunter's with no layout change | `index.html` → section 05, `about.html` → section 03 |
+| `class-end-times` | Class end times, and which weeks are Gi vs No-Gi. This is what blocks `openingHoursSpecification` in the structured data | `index.html` → section 02 |
 | `age-policy` | Adults only, or are there kids' classes | `first-class.html` → FAQ |
 
 `tools/list-placeholders.mjs` now reports zero, which is what makes the site safe to publish.
@@ -85,20 +99,12 @@ If you add a placeholder back while drafting a change, it will start reporting a
 two-week trial — from a client-supplied Glofox screenshot. That closes the largest conversion
 leak the brief identified: the site states its price *before* handing off to Glofox.
 
-### Pointing the real domain here
+### The domain
 
-This is the part only the club can do, and it is what "going live" ultimately means.
-`manhattangrappleclub.com` is still on GoDaddy serving the old site.
-
-1. In Vercel → the project → **Domains**, add `manhattangrappleclub.com` (and `www`).
-2. Vercel gives you DNS records; set them at GoDaddy, replacing the current ones.
-3. Nothing else needs changing in this repo — every page's `<link rel="canonical">` and the
-   JSON-LD `url` already point at `manhattangrappleclub.com`.
-
-That last point is deliberate. While the site is served from `manhattangrapplingclub.vercel.app`,
-those canonical tags mean search engines treat the club's real domain as authoritative, so this
-copy **cannot compete with the existing site in search results**. The moment the domain is
-pointed here, the configuration is already correct with no further edits.
+**Done.** `www.manhattangrappleclub.com` resolves to this deployment, and the non-`www`,
+`http`, `index.html` and `.html` variants all 308 to the canonical form. Every
+`<link rel="canonical">`, `og:url`, JSON-LD `url` and `sitemap.xml` entry names that final
+form — never a variant that redirects. `tools/check-seo.mjs` asserts it on every run.
 
 ### The contact form is interim
 
@@ -177,7 +183,7 @@ before — desktop is unchanged.
 
 **The site is dark because the maths forced it.** Gold text on white measures 1.76:1 contrast, which is unreadable. Gold on near-black measures 11.21:1. So gold became a *fill* colour — the primary button is a gold block with black text at 11.21:1 — and the page went dark. That happens to match the badge's own construction and suits the sport.
 
-**Section order follows the visitor, not marketing convention.** Someone arriving from Google Maps wants: schedule → trial → cost → location → instructor. That is exactly the scroll order.
+**Section order follows the visitor, not marketing convention.** Someone arriving from Google Maps wants: schedule → trial → cost → location → instructor. That is still the scroll order, with one deliberate addition ahead of it: a short **About** section directly under the hero. The `<h1>` is the conversion promise ("You don't have to be ready to start"); the `<h2>` immediately below it is *"Brazilian Jiu-Jitsu in Manhattan, Kansas"*. Naming the sport and the town in the first heading after the `<h1>` is the strongest local-relevance signal the page can send, and the hero keeps its own CTA and its "See the schedule" jump link, so nothing is taken from it. The full version of that copy lives on `/about`.
 
 **The schedule is a calendar, not a list.** The first draft showed only the five class days, so it ran Mon, Tue, Wed, Thu, **Sun** — and that jump read as a gap rather than a closed weekend. It now renders all seven days in order, with Friday and Saturday as explicit dashed "Closed" cells. Same markup, two views: an agenda below 1024px, and a true seven-column week grid above it. The grid waits until 1024px because below that a seventh of the content width is under 95px, which cannot hold "Introduction to Grappling". On mobile a compact week-at-a-glance strip carries the calendar shape instead — the whole week in one line, with the next class highlighted.
 
@@ -187,7 +193,7 @@ before — desktop is unchanged.
 
 ## Content provenance
 
-Every factual claim traces to the club's own live site as extracted on 2026-07-25 — schedule, class descriptions, FAQ answers, policy content, address, Glofox links. Social profiles were verified separately. Full source-by-source detail is in:
+Every factual claim traces to the club's own live site as extracted on 2026-07-25 — schedule, class descriptions, FAQ answers, policy content, address, Glofox links — plus a second round of copy supplied directly by the club on 2026-08-19: the About/mission text, rewritten class descriptions, the "Start Here" bullets, the rewritten FAQ, and Coach Hunter's biography. Social profiles were verified separately. Full source-by-source detail is in:
 
 ```
 _bmad-output/planning-artifacts/briefs/brief-ManhattanGrapplingClubSite-2026-07-25/addendum.md
@@ -195,6 +201,63 @@ _bmad-output/planning-artifacts/briefs/brief-ManhattanGrapplingClubSite-2026-07-
 
 ## Recommended next steps beyond the site
 
-- **Create a Google Business Profile if one does not exist.** None was found. Google Maps is the club's primary arrival path, and this is the highest-leverage marketing action available — bigger than anything on this page.
-- **Link the Instagram and Facebook accounts from the site.** Both exist; neither was linked.
-- **Add analytics at launch** so the next iteration is measured rather than argued.
+These moved into [`../LOCAL-SEO-HANDOFF.md`](../LOCAL-SEO-HANDOFF.md), which is the full
+off-site list: Google Business Profile, honest review collection, Apple/Bing/Facebook
+listings, local links, Search Console, and what to measure.
+
+The headline is unchanged: **create a Google Business Profile if one does not exist.** None
+was found. Google Maps is the club's primary arrival path, and it is the highest-leverage
+marketing action available — bigger than anything on this page.
+
+Instagram and Facebook are now linked from every page's footer and from the contact page.
+
+## Round two — 2026-08-19
+
+The club supplied new copy, and an SEO audit found real defects. Both are addressed.
+
+**Content.** New About section on the home page and a dedicated `/about`. Class descriptions,
+the "Start Here" list and the whole FAQ replaced with the club's own supplied wording. Coach
+Hunter's biography added — Chicago 2016, Purple Belt under Jeff Serafin, seminars. Coach
+Annie has photos but **no supplied biography**, so she is not published: the markup carries a
+`TODO — COACH ANNIE` comment and the coach grid already reserves space for her card.
+
+**"Start Here" is bullets now, not numbered steps.** The four items are things to know, not a
+sequence, and numbering them implied an order a first-timer would then worry about getting
+wrong. The new `.bullets` component is `.ticks`' rhythm with the hygiene list's gold bar
+instead of a `decimal-leading-zero` counter.
+
+**Class descriptions stay in the HTML.** They render in the schedule board on every viewport
+with JavaScript off. The FAQ still uses `<details>`, but that is a *native* disclosure —
+every question and answer is in the DOM and readable by a crawler whether it is open or not.
+
+**Canonicals were pointing at URLs that redirect.** Every page named
+`https://manhattangrappleclub.com/first-class.html` — non-`www` *and* `.html` — when the
+server 308s both. All five now name the final `https://www.…/first-class` form, as do
+`og:url`, the JSON-LD `url`, and `sitemap.xml`. This is invisible in a browser, so
+`tools/check-seo.mjs` asserts it.
+
+**`robots.txt` and `sitemap.xml` were both 404.** Now present, with the sitemap listing only
+the five canonical URLs.
+
+**Open Graph images were relative** (`content="assets/img/badge.webp"`), which crawlers
+ignore — every share of this site previewed with no image. Now absolute, with dimensions and
+alt text, and pointing at a photo rather than the square badge, since the card is
+`summary_large_image`.
+
+**Structured data.** The `SportsActivityLocation` gained a stable `@id`, absolute crawlable
+images, a logo, and `sport`. `/about` and `/first-class` reference that `@id` rather than
+re-declaring the business, so the site describes one entity rather than five. `FAQPage`
+added, verbatim against the rendered answers. Still deliberately absent:
+`openingHoursSpecification` (class *end* times have never been published, and inferring one
+would put a false claim about a real business into structured data), `geo`, `hasMap`, and
+`aggregateRating`.
+
+**The header nav breakpoint moved from 1025px to 1100px.** A sixth item ("About") does not
+fit: measured, the row needs about 1060px of content width, and below ~1100px the lockup was
+squeezed into a third line. Between 1025 and 1100 the hamburger takes over — it already
+carries every link the desktop nav does and more — while the header's trial button stays
+visible from 1025px so the desktop conversion path is never absent. The 1025px case was
+*already* broken before this change, with five items; it is fixed now too.
+
+**One stray `</div>`** in `index.html`'s location section, left behind when the map embed
+moved to `contact.html`, was silently reparenting everything after it.

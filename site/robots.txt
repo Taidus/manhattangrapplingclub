@@ -1,0 +1,14 @@
+# Manhattan Grapple Club — https://www.manhattangrappleclub.com/
+#
+# Normal crawling is allowed everywhere. There is nothing on this site that should be
+# kept out of an index: five public pages, no member area, no search results, no
+# faceted urls, no staging paths.
+#
+# Note the absence of a blanket "Disallow: /assets/". Blocking CSS, JS or images stops
+# Googlebot rendering the page the way a visitor sees it, which costs more than it saves.
+
+User-agent: *
+Allow: /
+
+# Absolute url, on the canonical https + www host — a relative Sitemap: line is ignored.
+Sitemap: https://www.manhattangrappleclub.com/sitemap.xml

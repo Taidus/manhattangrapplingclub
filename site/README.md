@@ -302,11 +302,23 @@ href resolves to a real `image/webp` response.
 a freshly attached listener never ran — so releasing the full-size image happens in every
 close path directly, with `cancel` and `close` as belt-and-braces.
 
-**The coach section is a real pair now.** Hunter's photo was a wide shot captioned "Coach
-Hunter — right", which asked the reader to work out which of two people he was. He and
-Annie now have matching solo portraits from the same session against the same wall. Annie's
-card carries her photo and her name and nothing else — her biography still has not been
-supplied, and the card is deliberately short rather than filled with invented copy.
+**The coach photos are client-chosen.** Hunter's card is a group shot at **Serafin
+Jiu-Jitsu** — he is second from left, and the caption says so. The wall is the reason it
+was chosen: it corroborates the bio line about earning his Purple Belt under Jeff Serafin.
+Its source is a 1350x1800 phone JPEG, already exactly 3:4, so it is used uncropped —
+cropping to Hunter alone would mean roughly 560x750 of real pixels upscaled into a 900w
+slot. It is also the heaviest image on the site at 185KB for the 900w encode: a noisy
+JPEG of a heavily textured brick wall is the worst case for WebP. It is lazy-loaded and
+below the fold, and it was re-encoded at a lower quality than every other photo (0.62 vs
+0.80) to get it that low.
+
+Annie's card carries her photo and her name and nothing else — her biography still has not
+been supplied, and the card is deliberately short rather than filled with invented copy.
+
+**Not published: the names of the other three people in Hunter's photo.** They were
+supplied, but three names for four people is ambiguous about who is who, and misattributing
+a private individual on a public page is not a mistake worth risking. Add them to the
+figcaption if you can confirm the left-to-right order.
 
 **The header nav lost "Pricing".** With Gallery added it would have been seven items, and
 seven do not fit at *any* width: `--max` caps the header's content box at 1136px and the

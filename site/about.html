@@ -77,7 +77,7 @@
     <nav class="site-nav" aria-label="Pages">
       <a href="about.html" aria-current="page">About</a>
       <a href="index.html#schedule">Schedule</a>
-      <a href="index.html#pricing">Pricing</a>
+      <a href="gallery.html">Gallery</a>
       <a href="first-class.html">First Class</a>
       <a href="standards.html">Standards</a>
       <a href="contact.html">Contact</a>
@@ -103,6 +103,7 @@
         <a href="about.html" aria-current="page">About the club</a>
         <a href="index.html#schedule">Class schedule</a>
         <a href="index.html#womens">Women&rsquo;s BJJ</a>
+        <a href="gallery.html">Photo gallery</a>
         <a href="index.html#pricing">Trial &amp; pricing</a>
         <a href="index.html#coach">Who you&rsquo;ll train with</a>
         <a href="first-class.html">Your first class</a>
@@ -216,24 +217,25 @@
         <h2 id="coaches-title">Who You&rsquo;ll Train With</h2>
       </div>
 
-      <!-- One card per coach. The grid is `repeat(auto-fit, …)` above 1025px, so a second
-           card drops in beside this one with no layout change required.
+      <!-- One card per coach.
 
-           TODO — COACH ANNIE (club input required).
-           The club supplied photos captioned "Coach Annie", but no biography, belt rank,
-           promoting instructor or start date has ever been provided. Nothing about her is
-           published here rather than published wrong. To add her card: copy the <article
-           class="coach"> block below, swap in her photo and her OWN confirmed details, and
-           delete this comment. Do NOT fill it with plausible-sounding copy. -->
+           TODO — COACH ANNIE'S BIOGRAPHY (club input required).
+           Her photo and her name are published because both are confirmed: the club
+           supplied the photo captioned "Coach Annie". Her BIOGRAPHY, belt rank, promoting
+           instructor and start date have never been supplied, so her card carries no belt
+           swatch and no bio paragraphs — an intentionally short card, not a broken one.
+           When the club sends the bio: add a .belt block and .coach-note paragraphs
+           matching Hunter's card below, and delete this comment. Do NOT fill it with
+           plausible-sounding copy. -->
       <div class="coach-grid">
         <article class="coach">
           <figure class="photo photo-portrait">
-            <img src="assets/img/photos/coach-540.webp"
-                 srcset="assets/img/photos/coach-540.webp 540w, assets/img/photos/coach-900.webp 900w"
+            <img src="assets/img/photos/hunter-540.webp"
+                 srcset="assets/img/photos/hunter-540.webp 540w, assets/img/photos/hunter-900.webp 900w"
                  sizes="(min-width: 1025px) 340px, 100vw"
                  width="900" height="1200" loading="lazy" decoding="async"
-                 alt="Coach Hunter, on the right in a purple belt, on the mats with another jiu-jitsu practitioner.">
-            <figcaption>Coach Hunter &mdash; right</figcaption>
+                 alt="Coach Hunter, arms folded, in front of the CrossFit 785 wall at the gym.">
+            <figcaption>Coach Hunter</figcaption>
           </figure>
 
           <div class="coach-body">
@@ -255,6 +257,21 @@
               Hunter&rsquo;s goal is to make jiu-jitsu approachable, practical, and rewarding for
               students at every experience level.
             </p>
+          </div>
+        </article>
+
+        <article class="coach">
+          <figure class="photo photo-portrait">
+            <img src="assets/img/photos/annie-540.webp"
+                 srcset="assets/img/photos/annie-540.webp 540w, assets/img/photos/annie-900.webp 900w"
+                 sizes="(min-width: 1025px) 340px, 100vw"
+                 width="900" height="1200" loading="lazy" decoding="async"
+                 alt="Coach Annie, arms folded and smiling, in front of the CrossFit 785 wall at the gym.">
+            <figcaption>Coach Annie</figcaption>
+          </figure>
+
+          <div class="coach-body">
+            <h3 class="coach-lede">Coach <strong>Annie</strong></h3>
           </div>
         </article>
       </div>
@@ -327,6 +344,7 @@
     <nav class="footer-links" aria-label="Footer">
       <a href="about.html">About</a>
       <a href="index.html#schedule">Schedule</a>
+      <a href="gallery.html">Gallery</a>
       <a href="index.html#pricing">Pricing</a>
       <a href="first-class.html">First class</a>
       <a href="standards.html">Standards</a>

@@ -23,6 +23,7 @@ cd site && python3 -m http.server 8080
 site/
 ├── index.html                  home — the arrival moment
 ├── about.html                  the club, how we coach, who you'll train with
+├── gallery.html                14 photos + a native-<dialog> lightbox
 ├── first-class.html            "new here?" — start here + FAQ
 ├── standards.html              conduct, sparring etiquette, safety & hygiene
 ├── contact.html                phone, email, social, map, directions
@@ -36,7 +37,7 @@ site/
 └── tools/check-seo.mjs         canonicals, metadata, JSON-LD, sitemap, robots
 ```
 
-## Five pages, not one
+## Six pages, not one
 
 The single page had grown to **16,511px on a phone — roughly 20 screens.** Reaching the community standards meant scrolling past 9,363px of everything else. So the long tail moved onto its own pages:
 
@@ -44,6 +45,7 @@ The single page had grown to **16,511px on a phone — roughly 20 screens.** Rea
 | --- | --- | --- |
 | `index.html` | 8,690px | Hero, about, the week, Women's BJJ, trial & pricing, compact location, coaches, links out |
 | `about.html` | 5,396px | The club's story, how we coach, coach biographies, where to go next |
+| `gallery.html` | 5,930px | 14 photos, tap any to open the lightbox |
 | `first-class.html` | 2,685px | Start here, then every FAQ |
 | `standards.html` | 5,645px | Conduct, sparring do/don't, safety & hygiene |
 | `contact.html` | 4,328px | Phone, email, social, contact form, map, directions, which door |
@@ -261,3 +263,58 @@ visible from 1025px so the desktop conversion path is never absent. The 1025px c
 
 **One stray `</div>`** in `index.html`'s location section, left behind when the map embed
 moved to `contact.html`, was silently reparenting everything after it.
+
+## Round three — photos and the gallery
+
+The club sent 24 photographs. They are a large upgrade on what was here: the previous
+Women's BJJ image was a distant sideline shot of people's backs, in the section aimed at
+the audience most likely to be nervous about walking in.
+
+**A `/gallery` page**, 14 photos in the panel grid — the same 2px-gap-over-a-hairline
+idiom as the week board and the standards. Three columns above 1025px, two above 620px,
+one below.
+
+**The lightbox is a native `<dialog>`.** No library. The browser supplies the parts that
+are easy to get wrong and expensive to reimplement: focus is trapped inside the dialog,
+the rest of the page goes inert, Escape closes it, and focus returns to the thumbnail that
+opened it. What `main.js` adds is only what `<dialog>` has no answer for — moving between
+photos, and swapping the image in. About 70 lines.
+
+**Every thumbnail is a link, not a button.** `href` points at the full-size encode, so with
+JavaScript off the gallery still works: the click just opens the photo. That is verified,
+not assumed — the test suite loads the page with page scripting disabled and confirms the
+href resolves to a real `image/webp` response.
+
+**Two bugs worth recording, both found by measuring rather than looking:**
+
+- The arrows were children of `.lb-stage` and absolutely positioned, returning to
+  `position: static` on mobile. That made them grid *items* of a two-row grid that now had
+  four in-flow children — so they stretched into full-width gold blocks covering the photo.
+  They are markup children of the caption bar now, and only lifted out above 641px.
+- `max-height: 100%` on the lightbox image did nothing. The percentage resolves against a
+  grid area whose height comes from an `fr` track, and the image rendered at its full
+  1033px inside an 863px row, overflowing the viewport and covering the caption. It now
+  fills a definite box with `object-fit: contain`, which removes the percentage entirely.
+  (The row also needed `minmax(0, 1fr)`: a bare `1fr` is `minmax(auto, 1fr)`, and that auto
+  floor let the row grow to the image's natural height.)
+
+**Cleanup does not depend on the `close` event.** It fires unreliably in headless Chrome —
+a freshly attached listener never ran — so releasing the full-size image happens in every
+close path directly, with `cancel` and `close` as belt-and-braces.
+
+**The coach section is a real pair now.** Hunter's photo was a wide shot captioned "Coach
+Hunter — right", which asked the reader to work out which of two people he was. He and
+Annie now have matching solo portraits from the same session against the same wall. Annie's
+card carries her photo and her name and nothing else — her biography still has not been
+supplied, and the card is deliberately short rather than filled with invented copy.
+
+**The header nav lost "Pricing".** With Gallery added it would have been seven items, and
+seven do not fit at *any* width: `--max` caps the header's content box at 1136px and the
+row needs 1164px. Pricing is a same-page anchor, the trial button sits immediately beside
+it, and it is still in the footer, the mobile menu, and the home page itself. Six items fit
+from 1140px, so the nav breakpoint moved to 1160px for real slack.
+
+**Weights.** 400w thumbs are 8–24KB, 800w are 19–75KB, 1600w are 36–178KB. The gallery's
+first paint is 46KB (the three above-the-fold cells, which are `loading="eager"` — a lazy
+LCP image is a self-inflicted delay); the other eleven are lazy. Full-size encodes load only
+when a photo is opened. Every photo on disk totals 2.6MB, against 74MB of source JPEGs.

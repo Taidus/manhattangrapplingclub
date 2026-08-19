@@ -226,8 +226,104 @@
     });
   }
 
+  /* ----------------------------------------------------------------------
+     5. Gallery lightbox
+     Every thumbnail is already a link to the full-size image, so with this
+     function removed — or with JavaScript off entirely — the gallery still
+     works: the link just navigates to the photo.
+
+     Built on <dialog>, which supplies the parts that are easy to get wrong:
+     focus is trapped inside the dialog, the rest of the page is inert,
+     Escape closes it, and focus returns to the thumbnail that opened it.
+     What is added here is only what <dialog> has no answer for — moving
+     between photos, and swapping the image in.
+     ---------------------------------------------------------------------- */
+  function lightbox() {
+    var box = document.getElementById('lightbox');
+    var grid = document.getElementById('gallery');
+    if (!box || !grid || typeof box.showModal !== 'function') return;
+
+    var links = Array.prototype.slice.call(grid.querySelectorAll('.gal-item'));
+    if (!links.length) return;
+
+    var img = document.getElementById('lbImg');
+    var cap = document.getElementById('lbCap');
+    var count = document.getElementById('lbCount');
+    var index = 0;
+
+    function show(i) {
+      index = (i + links.length) % links.length;   // wraps both ways
+      var link = links[index];
+      var thumb = link.querySelector('img');
+
+      // The full-size encode is the link target; the 800w thumb is offered
+      // alongside it so a phone isn't sent a 1600px file it cannot use.
+      img.src = link.getAttribute('href');
+      img.srcset = link.getAttribute('data-srcset') || '';
+      img.sizes = '100vw';
+      // The thumbnail's alt IS the description. Reusing it keeps one source of truth.
+      img.alt = thumb ? thumb.alt : '';
+      cap.textContent = link.getAttribute('data-caption') || '';
+      count.textContent = (index + 1) + ' / ' + links.length;
+    }
+
+    function open(i, e) {
+      if (e) e.preventDefault();
+      show(i);
+      box.showModal();
+    }
+
+    links.forEach(function (link, i) {
+      link.addEventListener('click', function (e) {
+        // Let modified clicks (new tab, download, middle-click) behave normally.
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        open(i, e);
+      });
+    });
+
+    // Drop the full-size image so it isn't held in memory, and so reopening never
+    // shows the PREVIOUS photo for a frame while the new one decodes — Chrome keeps
+    // the old frame painted until the replacement is ready.
+    function release() {
+      img.removeAttribute('src');
+      img.removeAttribute('srcset');
+    }
+
+    function close() {
+      box.close();
+      release();
+    }
+
+    box.querySelector('.lb-prev').addEventListener('click', function () { show(index - 1); });
+    box.querySelector('.lb-next').addEventListener('click', function () { show(index + 1); });
+    box.querySelector('.lb-close').addEventListener('click', close);
+
+    // Arrow keys. Escape is already handled natively by <dialog>.
+    box.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+    });
+
+    // A click on the backdrop closes. The dialog fills the viewport, so "backdrop"
+    // means the padding around the figure — anything that is not a control or the
+    // image itself.
+    box.addEventListener('click', function (e) {
+      if (e.target === box || e.target.classList.contains('lb-stage')) close();
+    });
+
+    // Escape is handled natively, which means the only hook for it is an event.
+    // Both are listened for, and release() is idempotent: `cancel` fires first and
+    // is the one that reliably arrives, `close` is the belt-and-braces. Neither is
+    // the ONLY path — every close initiated here calls release() directly — because
+    // a cleanup that depends on one event firing is a cleanup that silently stops
+    // happening the day that event doesn't.
+    box.addEventListener('cancel', release);
+    box.addEventListener('close', release);
+  }
+
   markNextClass();
   stickyCta();
   scrollReveal();
   mobileMenu();
+  lightbox();
 })();

@@ -2,7 +2,7 @@
 
 A redesign of [manhattangrappleclub.com](https://www.manhattangrappleclub.com/) for **Manhattan Grapple Club**, a Brazilian Jiu-Jitsu gym in Manhattan, **Kansas**.
 
-**Live at <https://www.manhattangrappleclub.com/>.** Five static pages, no build step.
+**Live at <https://www.manhattangrappleclub.com/>.** Six static pages, no build step.
 
 ## Run it
 
@@ -17,9 +17,10 @@ cd site && python3 -m http.server 8080
 ## What's here
 
 ```
-site/                 the site — five static pages, no build step
+site/                 the site — six static pages, no build step
 ├── index.html          home: hero, about, the week, Women's BJJ, trial & pricing, location, coaches
 ├── about.html          the club, how we coach, who you'll train with
+├── gallery.html        14 photos, with a native-<dialog> lightbox
 ├── first-class.html    "new here?" — start here, then every FAQ
 ├── standards.html      conduct, sparring etiquette, safety & hygiene
 ├── contact.html        phone, email, social, contact form, map, directions
@@ -72,6 +73,18 @@ Every page's `<link rel="canonical">`, `og:url`, JSON-LD `url`, and every entry 
 `sitemap.xml` is the final form — never a variant that redirects. `check-seo.mjs` asserts
 this, because a canonical tag naming a URL that 308s is the specific mistake this site had
 before, and it is invisible in a browser.
+
+## Photos
+
+`images/MGC Photos for Website/` holds the client's originals — 24 JPEGs, 2.5–4MB each.
+Nothing that large is served. `site/assets/img/photos/` holds only WebP encodes: gallery
+images at 400w/800w/1600w, coach portraits at 540w/900w. The whole photo set on disk is
+2.6MB; the gallery's first paint is 46KB.
+
+There is no encoder in this repo and no build step. The encodes were produced by resizing
+with ffmpeg's lanczos scaler to exact target pixels, then transcoding 1:1 through Chrome's
+own libwebp. To add a photo, produce the three WebP sizes however you like and add an entry
+to the gallery list — the page is plain HTML.
 
 ## Status
 

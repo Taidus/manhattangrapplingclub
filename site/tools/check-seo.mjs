@@ -36,6 +36,7 @@ const ok = m => console.log('  ✓ ' + m);
 const EXPECT = {
   'index.html':       'https://www.manhattangrappleclub.com/',
   'about.html':       'https://www.manhattangrappleclub.com/about',
+  'gallery.html':     'https://www.manhattangrappleclub.com/gallery',
   'first-class.html': 'https://www.manhattangrappleclub.com/first-class',
   'standards.html':   'https://www.manhattangrappleclub.com/standards',
   'contact.html':     'https://www.manhattangrappleclub.com/contact',

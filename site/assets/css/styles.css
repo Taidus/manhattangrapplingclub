@@ -396,12 +396,21 @@ address { font-style: normal; }
      to push this pair to the right edge. */
   .menu { margin-left: 0; }
 }
-/* The nav waits until 1100px. Measured: with six items the header row needs about
-   1060px of content width, and below ~1100px the lockup is squeezed into a THIRD line
-   ("Grapple" / "Club"). Between 1025 and 1100 the hamburger takes over — it carries
-   every link the desktop nav does, plus more, plus its own trial CTA — so nothing is
-   lost, and the header stops looking broken at the one width where it used to. */
-@media (min-width: 1100px) {
+/* The nav waits until 1160px. Measured, with the six items it now carries — About,
+   Schedule, Gallery, First Class, Standards, Contact — the header row needs about
+   1045px of content width; 1140px is where that first fits, and 1160px leaves real
+   slack rather than four pixels of it.
+
+   Note the ceiling this is measured against: `--max` caps `.wrap` at 1200px, so the
+   header's content box stops growing at 1136px no matter how wide the window gets.
+   A SEVENTH item does not fit at ANY width — it needs 1164px — which is why Pricing
+   is not in this nav. It is still in the footer, in the mobile menu, and on the home
+   page itself, and the trial button sits immediately to the right of these links.
+
+   Below 1160px the hamburger takes over. It carries every link the desktop nav does,
+   plus more, plus its own trial CTA, and the header's trial button is separately
+   visible from 1025px — so nothing is lost at any width. */
+@media (min-width: 1160px) {
   .menu { display: none; }
   .site-nav { display: flex; }
 }
@@ -951,6 +960,166 @@ address { font-style: normal; }
 .prose strong { color: var(--white); font-weight: 700; }
 /* After `.prose p` so it wins on cascade order rather than needing !important. */
 .prose .prose-lede { color: var(--near-white); font-size: var(--size-lede); }
+
+/* ---------- Gallery ----------
+   The panel grid again: a 2px gap over a hairline-coloured parent, so the gap
+   becomes the divider. Same idiom as the week board and the standards. */
+.gallery {
+  list-style: none;
+  display: grid; gap: var(--rule-gap);
+  grid-template-columns: 1fr;
+  background: var(--hairline-2);
+  border: var(--rule-edge) solid var(--hairline-2);
+  margin: 0;
+}
+@media (min-width: 620px)  { .gallery { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1025px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+
+.gallery li { background: var(--ink); display: flex; }
+
+.gal-item {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* zoom-in is the standard, immediately-legible affordance for "this opens larger".
+     It does the job a hover tint cannot do on its own. */
+  cursor: zoom-in;
+  line-height: 0;
+}
+.gal-item img {
+  width: 100%; height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Gold wash on hover, pointer devices only — on touch there is no hover state to
+   reveal it, and the images are self-evidently tappable in a gallery. */
+@media (hover: hover) and (pointer: fine) {
+  .gal-item::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 160ms var(--ease-out);
+  }
+  .gal-item:hover::after { opacity: 0.16; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gal-item::after { transition: none; }
+}
+
+/* ---------- Lightbox ----------
+   A native <dialog>. The browser supplies the modal semantics for free: focus is
+   trapped inside it, the rest of the page goes inert, Escape closes it, and focus
+   returns to the thumbnail that opened it. None of that is reimplemented here.
+
+   Without JavaScript every thumbnail is still a plain link to the full-size image,
+   so the gallery works with the dialog never opening at all. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  width: 100vw; height: 100vh;
+  max-width: 100vw; max-height: 100vh;
+  overflow: hidden;
+  color: var(--white);
+}
+/* dvh, not vh: on mobile Safari 100vh is the tallest the viewport ever gets, so the
+   caption bar would sit behind the browser's own toolbar. */
+@supports (height: 100dvh) {
+  .lightbox { height: 100dvh; max-height: 100dvh; }
+}
+.lightbox::backdrop { background: rgba(11, 11, 12, 0.94); }
+.lightbox:not([open]) { display: none; }
+
+.lb-stage {
+  position: relative;              /* the close and arrow buttons position against this */
+  display: grid;
+  /* minmax(0, 1fr), NOT 1fr. A bare `1fr` is `minmax(auto, 1fr)`, and that auto floor
+     lets the row grow to the image's natural height — which pushed the caption off
+     the bottom of the screen and overflowed a 1600px-wide photo out of the viewport. */
+  grid-template-rows: minmax(0, 1fr) auto;
+  width: 100%; height: 100%;
+  padding: clamp(52px, 8vw, 72px) clamp(12px, 3vw, 32px) clamp(16px, 3vw, 28px);
+  gap: 16px;
+}
+
+/* The image fills the figure's box exactly and letterboxes inside it with
+   object-fit: contain, rather than sizing itself and being capped by max-height.
+   `max-height: 100%` on a replaced element does NOT hold here: the percentage is
+   resolved against a grid area whose height comes from an `fr` track, and the image
+   rendered at its full 1033px inside an 863px row — overflowing the viewport and
+   covering the caption. Filling a definite box removes the percentage entirely. */
+.lb-figure {
+  position: relative;
+  margin: 0;
+  min-height: 0;
+}
+.lb-figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+
+.lb-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(12px, 3vw, 24px);
+  flex-wrap: wrap;
+}
+.lb-caption {
+  margin: 0;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: var(--track-caps-tight); text-transform: uppercase;
+  color: var(--near-white);
+  text-align: center;
+}
+.lb-count {
+  margin: 0;
+  font-family: var(--font-display); font-weight: var(--weight-display);
+  font-size: 12px; letter-spacing: 0.08em;
+  color: var(--gold);
+  flex: none;
+}
+
+/* Controls. 48px minimum target on every one of them. */
+.lb-btn {
+  appearance: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 48px; min-height: 48px;
+  padding: 0 14px;
+  background: var(--gold);
+  color: var(--ink);
+  border: 0; border-radius: var(--r-none);
+  font-family: var(--font-display); font-weight: var(--weight-display);
+  font-size: 18px; line-height: 1;
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) { .lb-btn:hover { background: var(--gold-hi); } }
+.lb-btn:active { transform: scale(0.97); }
+
+.lb-close { position: absolute; top: clamp(10px, 2vw, 18px); right: clamp(10px, 2vw, 18px); }
+
+/* The arrows are markup children of .lb-bar, so their DEFAULT state is in-flow inside
+   the bar — which is what a narrow screen needs. Only from 641px up are they lifted
+   out and centred over the image.
+   They were previously children of .lb-stage, absolutely positioned, and returned to
+   `position: static` on mobile. That made them grid ITEMS of .lb-stage, which had two
+   defined rows and now four in-flow children — so they stretched into full-width gold
+   blocks covering the photo. */
+@media (min-width: 641px) {
+  .lb-prev, .lb-next { position: absolute; top: 50%; transform: translateY(-50%); }
+  .lb-prev { left: clamp(6px, 1.5vw, 18px); }
+  .lb-next { right: clamp(6px, 1.5vw, 18px); }
+}
+@media (max-width: 640px) {
+  /* prev — count — next on the first line, caption wrapping onto its own below. */
+  .lb-bar { justify-content: space-between; }
+  .lb-caption { order: 3; flex-basis: 100%; }
+}
 
 /* ---------- Coach ----------
    One `.coach` card per instructor. auto-fit means a second card drops in beside the

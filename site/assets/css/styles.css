@@ -958,8 +958,11 @@ address { font-style: normal; }
 .prose { display: grid; gap: 18px; max-width: 68ch; }
 .prose p { margin: 0; color: var(--muted); line-height: var(--lh-body); }
 .prose strong { color: var(--white); font-weight: 700; }
-/* After `.prose p` so it wins on cascade order rather than needing !important. */
+/* After `.prose p` so these win on cascade order rather than needing !important. */
 .prose .prose-lede { color: var(--near-white); font-size: var(--size-lede); }
+/* The closing line. Lifted out of --muted so a one-line sign-off doesn't read as the
+   copy trailing off; not sized up, because it is a sign-off and not a second lede. */
+.prose .prose-signoff { color: var(--white); font-weight: 700; }
 
 /* ---------- Gallery ----------
    The panel grid again: a 2px gap over a hairline-coloured parent, so the gap

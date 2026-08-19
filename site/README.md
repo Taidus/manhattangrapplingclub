@@ -315,10 +315,12 @@ below the fold, and it was re-encoded at a lower quality than every other photo 
 Annie's card carries her photo and her name and nothing else — her biography still has not
 been supplied, and the card is deliberately short rather than filled with invented copy.
 
-**Not published: the names of the other three people in Hunter's photo.** They were
-supplied, but three names for four people is ambiguous about who is who, and misattributing
-a private individual on a public page is not a mistake worth risking. Add them to the
-figcaption if you can confirm the left-to-right order.
+**The other three people in Hunter's photo are named** — Chris Wojcik, Keith Krikorian
+and Declan Moody, supplied by the club. The caption names all three together rather than
+mapping each to a position: the club confirmed only that Hunter is second from left, so
+attaching a specific name to a specific person in the frame would be a guess about
+identifiable private individuals. If the left-to-right order is confirmed later, the
+figcaption in `index.html` and `about.html` is the only thing that needs editing.
 
 **The header nav lost "Pricing".** With Gallery added it would have been seven items, and
 seven do not fit at *any* width: `--max` caps the header's content box at 1136px and the

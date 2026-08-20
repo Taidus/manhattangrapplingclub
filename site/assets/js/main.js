@@ -260,6 +260,13 @@
 
       // The full-size encode is the link target; the 800w thumb is offered
       // alongside it so a phone isn't sent a 1600px file it cannot use.
+      // Real dimensions of THIS photo, before the src swap. The lightbox opens full
+      // frames, whose aspects differ — several are portrait — so a single fixed
+      // width/height on the element would be wrong for most of them.
+      var dw = link.getAttribute('data-w'), dh = link.getAttribute('data-h');
+      if (dw && dh) { img.setAttribute('width', dw); img.setAttribute('height', dh); }
+      else { img.removeAttribute('width'); img.removeAttribute('height'); }
+
       img.src = link.getAttribute('href');
       img.srcset = link.getAttribute('data-srcset') || '';
       img.sizes = '100vw';

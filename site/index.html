@@ -245,15 +245,6 @@
         </p>
         <p class="prose-signoff">See you on the mats!</p>
       </div>
-
-      <div class="btn-row">
-        <a class="btn btn-primary"
-           href="https://app.glofox.com/portal/#/branch/697ce60e0cc4cd375e0bf861/memberships/69c059e136851fd01707d307/plan/1774213467171/buy"
-           target="_blank" rel="noopener noreferrer">
-          Start my free 2 weeks<span class="sr-only"> (opens in a new tab)</span>
-        </a>
-        <a class="btn btn-secondary" href="about.html">More about the club</a>
-      </div>
     </div>
   </section>
   <!-- ============ SCHEDULE ============ -->
@@ -358,6 +349,7 @@
       <figure class="photo photo-wide feature-photo">
         <a class="gal-item" href="assets/img/photos/womens-feature-1200.webp"
            data-srcset="assets/img/photos/womens-feature-720.webp 720w, assets/img/photos/womens-feature-1200.webp 1200w"
+           data-w="1200" data-h="900"
            data-caption="Women&rsquo;s BJJ &middot; Wednesdays 7:00pm">
           <img src="assets/img/photos/womens-feature-720.webp"
                srcset="assets/img/photos/womens-feature-720.webp 720w, assets/img/photos/womens-feature-1200.webp 1200w"
@@ -511,8 +503,9 @@
       <div class="coach-grid">
         <article class="coach">
           <figure class="photo photo-portrait">
-            <a class="gal-item" href="assets/img/photos/hunter-1200.webp"
-               data-srcset="assets/img/photos/hunter-900.webp 900w, assets/img/photos/hunter-1200.webp 1200w"
+            <a class="gal-item" href="assets/img/photos/hunter-full-1600.webp"
+               data-srcset="assets/img/photos/hunter-full-800.webp 800w, assets/img/photos/hunter-full-1600.webp 1600w"
+               data-w="1200" data-h="1600"
                data-caption="Coach Hunter, second from left &mdash; with Chris Wojcik, Keith Krikorian &amp; Declan Moody at Serafin Jiu-Jitsu">
               <img src="assets/img/photos/hunter-540.webp"
                    srcset="assets/img/photos/hunter-540.webp 540w, assets/img/photos/hunter-900.webp 900w"
@@ -548,8 +541,9 @@
 
         <article class="coach">
           <figure class="photo photo-portrait">
-            <a class="gal-item" href="assets/img/photos/annie-1200.webp"
-               data-srcset="assets/img/photos/annie-900.webp 900w, assets/img/photos/annie-1200.webp 1200w"
+            <a class="gal-item" href="assets/img/photos/annie-full-1600.webp"
+               data-srcset="assets/img/photos/annie-full-800.webp 800w, assets/img/photos/annie-full-1600.webp 1600w"
+               data-w="1600" data-h="1526"
                data-caption="Coach Annie">
               <img src="assets/img/photos/annie-540.webp"
                    srcset="assets/img/photos/annie-540.webp 540w, assets/img/photos/annie-900.webp 900w"
@@ -635,9 +629,10 @@
     <button class="lb-btn lb-close" type="button" aria-label="Close photo viewer">&times;</button>
 
     <figure class="lb-figure">
-      <!-- Every gallery encode is 1600x1200, so the ratio is known before the src is
-           set. Declaring it stops the figure reflowing as each photo decodes. -->
-      <img id="lbImg" alt="" width="1600" height="1200" decoding="async">
+      <!-- No width/height here: the lightbox opens the FULL frame of each photo, and
+           those differ in aspect — some are portrait. main.js sets the real dimensions
+           per photo from the link's data-w/data-h before swapping the src in. -->
+      <img id="lbImg" alt="" decoding="async">
     </figure>
 
     <!-- The arrows live in the bar. Above 641px CSS lifts them out and centres them

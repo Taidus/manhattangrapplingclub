@@ -285,6 +285,19 @@ JavaScript off the gallery still works: the click just opens the photo. That is 
 not assumed — the test suite loads the page with page scripting disabled and confirms the
 href resolves to a real `image/webp` response.
 
+**The lightbox opens the FULL FRAME, not the crop.** The gallery cells are a uniform 4:3
+crop and the coach cards are 3:4, because the grid needs uniform cells — but opening a
+photo should show the photograph. Annie's card made this obvious: her source is nearly
+square (1.048), so the 3:4 card crop threw away 28% of the frame, and clicking it opened
+that same crop with the right of the 785 shield missing. Ten of the fourteen gallery
+photos had the same flaw, less visibly (3:2 sources losing 11% to a 4:3 cell).
+
+Every lightbox target is now a `-full-` encode: the whole frame, scaled to fit a long-edge
+box at 800w and 1600w, no crop filter at all. Their aspects therefore vary — several are
+portrait — so the lightbox `<img>` carries no fixed `width`/`height`; `main.js` sets the
+real dimensions per photo from `data-w`/`data-h` on the link. `check-photos-clickable.mjs`
+asserts the opened image's natural aspect matches the SOURCE photo's, not the thumbnail's.
+
 **The lightbox is site-wide, not gallery-only.** Every content photo opens it: the Women's
 BJJ figure and both coach cards on the home page, both coach cards on `/about`, the
 exterior photo on `/contact`, and all 14 gallery images. Decorative images do not — the
